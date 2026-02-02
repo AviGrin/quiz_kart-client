@@ -1,0 +1,92 @@
+/* ========================================
+   PREMIUM INPUTS & SELECTS
+   ======================================== */
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    width: 100%;
+}
+
+.input-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-left: 2px;
+}
+
+.input-field,
+select {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--gray-800);
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease-in-out;
+    /* Clean appearance */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.input-field::placeholder {
+    color: var(--gray-400);
+}
+
+/* Focus State */
+.input-field:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    /* Soft Blue Ring */
+    background-color: var(--white);
+}
+
+/* Hover State */
+.input-field:hover,
+select:hover {
+    border-color: var(--gray-300);
+}
+
+/* --- SELECT SPECIFIC STYLING --- */
+/* Custom Chevron for Selects to look like a "Field" */
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25em;
+    padding-right: 2.5rem;
+    /* Space for icon */
+    cursor: pointer;
+}
+
+select:disabled {
+    background-color: var(--gray-50);
+    color: var(--gray-400);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Optional: Icon inside Input support (if wrapper exists) */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .input-icon {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+}
+
+.input-with-icon input {
+    padding-left: var(--space-10);
+}
