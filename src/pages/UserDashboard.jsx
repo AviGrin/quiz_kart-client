@@ -68,8 +68,12 @@ function UserDashboard(){
                 <p>כאן תוכל לעדכן את הפרטים שלך:</p>
 
                 <Card>
-                    <Input label="שם משחק" placeholder="הכנס שם למשחק" onChange=
-                        {(e) => setNewGameName(e.target.value)}/>
+                    <Input
+                        label="שם משחק"
+                        placeholder="הכנס שם למשחק"
+                        value={newGameName}
+                        onChange={(e) => setNewGameName(e.target.value)}
+                    />
                     <select placeholder={"בחר סוג וקושי של שאלות"} onChange=
                         {(e) => setnewGameType(e.target.value)}>
                         <option value="0">חשבון קל</option>
