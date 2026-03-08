@@ -32,7 +32,7 @@ function UserDashboard(){
         }else {setIsModalOpen(false)}
 
 
-        axios.get(`${HOST}/newGame`, {
+        axios.get(HOST+"newGame", {
             params: {
                 token: token,
                 newGameName: newGameName,
@@ -40,10 +40,7 @@ function UserDashboard(){
             }
         }).then(response => {
             if (response.data.success) {
-
-
-                setIsModalOpen(false);
-                /*  להוסיף ניביגציה לדף הבא*/
+                navigate("/game/" + response.data.id);
             } else {
                 alert("יצירת המשחק נכשלה: " + response.data.message);
             }
@@ -56,8 +53,8 @@ function UserDashboard(){
 
 
     return(
-        <>hii
-            <Button text={"open new game as host"} onClick={() => setIsModalOpen(true)}/>
+        <>
+            <Button text={"התחל משחק חדש"} onClick={() => setIsModalOpen(true)}/>
 
 
             <Modal
@@ -67,30 +64,29 @@ function UserDashboard(){
                 <h2>הגדרות פרופיל</h2>
                 <p>כאן תוכל לעדכן את הפרטים שלך:</p>
 
-                <Card>
-                    <Input
-                        label="שם משחק"
-                        placeholder="הכנס שם למשחק"
-                        value={newGameName}
-                        onChange={(e) => setNewGameName(e.target.value)}
-                    />
-                    <select placeholder={"בחר סוג וקושי של שאלות"} onChange=
-                        {(e) => setnewGameType(e.target.value)}>
-                        <option value="0">חשבון קל</option>
-                        <option value="1">חשבון בינוני</option>
-                        <option value="2">חשבון מתקדם</option>
-                        <option value="2">חשבון קשה</option>
 
-                    </select>
+                <Input
+                    label="שם משחק"
+                    placeholder="הכנס שם למשחק"
+                    value={newGameName}
+                    onChange={(e) => setNewGameName(e.target.value)}
+                />
+                <select placeholder={"בחר סוג וקושי של שאלות"} onChange=
+                    {(e) => setnewGameType(e.target.value)}>
+                    <option value="0">חשבון קל</option>
+                    <option value="1">חשבון בינוני</option>
+                    <option value="2">חשבון מתקדם</option>
+                    <option value="2">חשבון קשה</option>
+
+                </select>
 
 
-                    <Button
-                        disabled={!newGameName.trim() || newGameType === -1}
-                        onClick={handleNewGame}
-                    >
-                        צור משחק חדש
-                    </Button>
-                </Card>
+                <Button
+                    text={"צור משחק חדש"}
+                    disabled={!newGameName.trim() || newGameType === -1}
+                    onClick={handleNewGame}
+                >
+                </Button>
             </Modal>
 
 

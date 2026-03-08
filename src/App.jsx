@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import DashboardWrapper from "./DashboardWrapper.jsx";
+import GamePage from "./pages/GamePage.jsx";
+
 function App() {
 
 
@@ -12,6 +14,7 @@ function App() {
               <Route path={"/"} element={<LoginPage />} />
               <Route path={"/signup"} element={<SignupPage />} />
               <Route path={"/dashboard"} element={<DashboardWrapper />} />
+              <Route path={"/game/:id"} element={<GamePage />} />
 
           </Routes>
       </BrowserRouter>

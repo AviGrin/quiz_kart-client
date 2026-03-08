@@ -8,12 +8,7 @@ const Card = ({ children, title, className = '', style = {} }) => {
             style={style}
         >
             {title && (
-                <h3 style={{
-                    marginBottom: '1rem',
-                    fontSize: '1.25rem',
-                    fontWeight: '600',
-                    color: 'var(--text-main)'
-                }}>
+                <h3 >
                     {title}
                 </h3>
             )}
