@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {data, useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import Cookies from 'js-cookie';
 import { HOST } from '../Constants.js';
-import Button from "../components/Button";
-import Input from "../components/Input";
-import Card from "../components/Card";
 import PlayerSide from "../components/PlayerSide.jsx"
 import CreatorSide from "../components/CreatorSide.jsx"
 
