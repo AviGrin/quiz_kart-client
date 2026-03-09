@@ -44,7 +44,7 @@ function GamePage(){
         }).then(response => {
             if (game.creator.id === response.data.id){
                 setRoll(USERS_ROLL.CREATOR);
-            }else if (game.players.find(p => p.id === response.data.id) !== null){
+            }else if (game.players.find(p => p.id === response.data.id) !== undefined){
                 setRoll(USERS_ROLL.PLAYER)
             }else {
                 setRoll(USERS_ROLL.NONE);

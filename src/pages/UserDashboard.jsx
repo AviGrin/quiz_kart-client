@@ -127,7 +127,7 @@ function UserDashboard(){
 
                 <Button
                     text={"היכנס למשחק"}
-                    disabled={!gameCode.trim() ||gameCode!==6}
+                    disabled={!gameCode.trim() ||gameCode.length !==6}
                     onClick={handleJoinGame}
                 >
                 </Button>
