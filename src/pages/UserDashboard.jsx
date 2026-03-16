@@ -10,12 +10,18 @@ import Input from "../components/Input";
 function UserDashboard(){
     const navigate = useNavigate();
     const [newGameName, setNewGameName] = useState("");
-
-    const [newGameType,setnewGameType] = useState(-1);
+    const GAME_TYPE = {
+        easy: 0,
+        medium:1,
+        hard:2
+    }
+    const [newGameType,setNewGameType] = useState(GAME_TYPE.medium);
     const [gameCode,setGameCode] = useState("");
 
     const [isModal1Open, setIsModal1Open] = useState(false);
     const [isModal2Open, setIsModal2Open] = useState(false);
+
+
 
     useEffect(() => {
         const token = Cookies.get("token");
@@ -91,21 +97,20 @@ function UserDashboard(){
                     onChange={(e) => setNewGameName(e.target.value)}
                 />
                 <select placeholder={"בחר סוג וקושי של שאלות"} onChange=
-                    {(e) => setnewGameType(e.target.value)}>
-                    <option value="0">חשבון קל</option>
-                    <option value="1">חשבון בינוני</option>
-                    <option value="2">חשבון מתקדם</option>
-                    <option value="2">חשבון קשה</option>
+                    {(e) => setNewGameType(e.target.value)} value={GAME_TYPE.medium}>
+                    <option value={GAME_TYPE.easy}>חשבון קל</option>
+                    <option value={GAME_TYPE.medium}>חשבון בינוני</option>
+                    <option value={GAME_TYPE.hard}>חשבון קשה</option>
 
                 </select>
 
 
                 <Button
                     text={"צור משחק חדש"}
-                    disabled={!newGameName.trim() || newGameType === -1}
+                    disabled={!newGameName.trim()}
                     onClick={handleNewGame}
-                >
-                </Button>
+                />
+
             </Modal>
 
             <Button text={"היכנס למשחק"} onClick={() => setIsModal2Open(true)}/>

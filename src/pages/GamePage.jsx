@@ -54,11 +54,11 @@ function GamePage(){
 
     if (roll === USERS_ROLL.PLAYER){
         return(
-            <PlayerSide />
+            <PlayerSide/>
         )
     }else if (roll === USERS_ROLL.CREATOR){
         return (
-            <CreatorSide/>
+            <CreatorSide id = {id} />
         )
     }else {
         return (
