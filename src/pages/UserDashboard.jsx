@@ -50,7 +50,7 @@ function UserDashboard(){
 
 
 
-        axios.get(HOST+"join-game", {
+        axios.get(HOST+"/join-game", {
             params: {
                 token: token,
                 gameCode: gameCode
@@ -90,19 +90,20 @@ function UserDashboard(){
                     value={newGameName}
                     onChange={(e) => setNewGameName(e.target.value)}
                 />
-                <select placeholder={"בחר סוג וקושי של שאלות"} onChange=
+                <select  onChange=
                     {(e) => setnewGameType(e.target.value)}>
-                    <option value="0">חשבון קל</option>
-                    <option value="1">חשבון בינוני</option>
-                    <option value="2">חשבון מתקדם</option>
-                    <option value="2">חשבון קשה</option>
+                    <option value={-1} disabled hidden>בחר סוג וקושי של שאלות...</option>
+                    <option value={0}>חשבון קל</option>
+                    <option value={1}>חשבון בינוני</option>
+                    <option value={2}>חשבון מתקדם</option>
+                    <option value={3}>חשבון קשה</option>
 
                 </select>
 
 
                 <Button
                     text={"צור משחק חדש"}
-                    disabled={!newGameName.trim() || newGameType === -1}
+                    disabled={!newGameName.trim() || newGameType === 4}
                     onClick={handleNewGame}
                 >
                 </Button>
@@ -127,7 +128,7 @@ function UserDashboard(){
 
                 <Button
                     text={"היכנס למשחק"}
-                    disabled={!gameCode.trim() ||gameCode!==6}
+                    disabled={!gameCode.trim() ||gameCode.length!==6}
                     onClick={handleJoinGame}
                 >
                 </Button>

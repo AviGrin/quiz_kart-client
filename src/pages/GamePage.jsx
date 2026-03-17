@@ -11,60 +11,62 @@ function GamePage(){
     const {id} = useParams();
     const [game,setGame] = useState(null);
     const navigate = useNavigate();
-    const USERS_ROLL = {
+    const USERS_ROLE = {
         NONE: 0,
         CREATOR: 1,
         PLAYER: 2
     }
-    const [roll, setRoll] = useState(USERS_ROLL.NONE);
+    const [role, setRole] = useState(USERS_ROLE.NONE);
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const token = Cookies.get("token");
-        if (!token || !id){
+        if (!token || !id) {
             navigate("/");
-        }else {
-            axios.get(HOST + "get-game", {
-                params: { token: token,id: id}
-            }).then(response => {
-                if (response.data.success) {
-                    setGame(response.data.gameModel);
+            return;
+        }
+
+        const USERS_ROLE = { NONE: 0, CREATOR: 1, PLAYER: 2 };
+
+        axios.get(`${HOST}/get-game`, { params: { token, id } })
+            .then(gameRes => {
+                if (gameRes.data.success) {
+                    const fetchedGame = gameRes.data.gameModel;
+                    setGame(fetchedGame);
+
+                    return axios.get(`${HOST}/get-default-params`, { params: { token } })
+                        .then(userRes => {
+                            const currentUserId = userRes.data.id;
+
+                            if (fetchedGame.creator.id === currentUserId) {
+                                setRole(USERS_ROLE.CREATOR);
+                            } else if (fetchedGame.players.some(p => p.id === currentUserId)) {
+                                setRole(USERS_ROLE.PLAYER);
+                            } else {
+                                setRole(USERS_ROLE.NONE);
+                            }
+                        });
                 } else {
-                    alert("התחברות נכשלה: " + response.data.message);
+                    alert("התחברות נכשלה: " + gameRes.data.message);
+                    navigate("/dashboard");
                 }
             })
-        }
-    },[id, navigate]);
+            .catch(err => console.error(err));
 
-    useEffect(()=>{
-        const token = Cookies.get("token");
-        axios.get(HOST + "get-default-params", {
-            params: { token: token }
-        }).then(response => {
-            if (game.creator.id === response.data.id){
-                setRoll(USERS_ROLL.CREATOR);
-            }else if (game.players.find(p => p.id === response.data.id) !== null){
-                setRoll(USERS_ROLL.PLAYER)
-            }else {
-                setRoll(USERS_ROLL.NONE);
-            }
-        })
-    },[USERS_ROLL.CREATOR, USERS_ROLL.NONE, USERS_ROLL.PLAYER, game])
+    }, [id, navigate]);
 
-    if (roll === USERS_ROLL.PLAYER){
-        return(
-            <PlayerSide />
-        )
-    }else if (roll === USERS_ROLL.CREATOR){
-        return (
-            <CreatorSide/>
-        )
-    }else {
-        return (
-            <>loading...</>
-        )
+
+
+
+    if (role === USERS_ROLE.PLAYER) {
+        return <PlayerSide gameData={game} />;
+    } else if (role === USERS_ROLE.CREATOR) {
+        return <CreatorSide gameData={game} />;
+    } else {
+        return <div style={{textAlign: "center", marginTop: "50px"}}>טוען נתוני משחק...</div>;
     }
+
 }
 
 export default GamePage;
