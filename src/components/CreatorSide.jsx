@@ -41,6 +41,7 @@ function CreatorSide({ gameData }) {
             return;
         }
         const sseUrl = `${HOST}/game-subscribe?token=${token}&gameId=${id}`;
+        // להוסיף בצד שרת קונטרולר לSSE
         const eventSource = new EventSource(sseUrl);
 
         eventSource.addEventListener("gameUpdate", (event) => {
