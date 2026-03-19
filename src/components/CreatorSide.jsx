@@ -9,9 +9,8 @@ function CreatorSide({ gameData }) {
     const [localGameData, setLocalGameData] = useState(gameData);
     const navigate = useNavigate();
     const { id } = useParams();
-    const [playersList, setPlayersList] = useState([]);
-    const [status, setStatus] = useState(0);
-
+    const [playersList, setPlayersList] = useState(gameData && gameData.players ? gameData.players : []);
+    const [status, setStatus] = useState(gameData ? gameData.status : 0);
     useEffect(() => {
         const token = Cookies.get("token");
 
@@ -26,6 +25,9 @@ function CreatorSide({ gameData }) {
             }).then(response => {
                 if (response.data.success) {
                     setLocalGameData(response.data.gameModel);
+                    if (response.data.gameModel && response.data.gameModel.players) {
+                        setPlayersList(response.data.gameModel.players);
+                    }
                 } else {
                     alert("שגיאה במשיכת נתוני המשחק");
                     navigate("/dashboard");
@@ -41,13 +43,14 @@ function CreatorSide({ gameData }) {
             return;
         }
         const sseUrl = `${HOST}/game-subscribe?token=${token}&gameId=${id}`;
-        // להוסיף בצד שרת קונטרולר לSSE
         const eventSource = new EventSource(sseUrl);
 
-        eventSource.addEventListener("gameUpdate", (event) => {
+        eventSource.addEventListener("gameUpdate", (event) => { // (וב-Creator: "gameUpdate")
             const data = JSON.parse(event.data);
-            if (data.type === "PLAYER_JOINED") {
-                setPlayersList(prevPlayers => [...prevPlayers, data.playerName]);
+            console.log("התקבל עדכון חי:", data);
+
+            if (data.type === "PLAYERS_LIST_UPDATE") {
+                setPlayersList(data.players);
             }
         });
         eventSource.onerror = (error) => {
@@ -58,7 +61,7 @@ function CreatorSide({ gameData }) {
         };
     }, [id]);
     if (!localGameData) {
-        return <div>טוען נתוני חדר ניהול...</div>;
+        return <div> טוען נתוני חדר ניהול...</div>;
     }
 
     const gameCode = localGameData.gameCode;
@@ -85,7 +88,7 @@ function CreatorSide({ gameData }) {
             {status===1 ? (
                 <div>
                     <h2>המשחק התחיל!</h2>
-                    {/* אמור להציג את התחרות במסך... */}
+                    {/* אנחנו אמורים להציג פה את התחרות במסך... */}
                 </div>
             ) : (
                 <div>
@@ -96,9 +99,10 @@ function CreatorSide({ gameData }) {
                             :
                             <>
                                 <li>שחקנים בהמתנה...</li>
-                                {playersList.map((player, index) => (
-                                    <li key={index}>{player}</li>
-                                ))}
+                                {playersList
+                                    .map((p, index) => (
+                                        <li key={index}>{p.fullName} - ניקוד: {p.score}</li>
+                                    ))}
                             </>
                         }
                     </ul>

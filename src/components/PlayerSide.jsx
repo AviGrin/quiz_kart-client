@@ -9,11 +9,10 @@ function PlayerSide({ gameData }) {
     const navigate = useNavigate();
     const [localGameData, setLocalGameData] = useState(gameData);
     const [myName, setMyName] = useState("");
-    const [status, setStatus] = useState(0);
+    const [status, setStatus] = useState(gameData ? gameData.status : 0);
 
     const [liveStatus, setLiveStatus] = useState("ממתין לתחילת המשחק...");
-    const [playersList, setPlayersList] = useState([]);
-
+    const [playersList, setPlayersList] = useState(gameData && gameData.players ? gameData.players : []);
     useEffect(() => {
         const token = Cookies.get("token");
 
@@ -29,9 +28,9 @@ function PlayerSide({ gameData }) {
                 if (response.data.success) {
                     setLocalGameData(response.data.gameModel);
 
-                    if (response.data.players) {
-                        const players = response.data.players;
-                        setPlayersList(players);
+
+                    if (response.data.gameModel && response.data.gameModel.players) {
+                        setPlayersList(response.data.gameModel.players);
                     }
 
                     axios.get(`${HOST}/get-default-params`, { params: { token } })
@@ -53,21 +52,19 @@ function PlayerSide({ gameData }) {
         const sseUrl = `${HOST}/game-subscribe?token=${token}&gameId=${id}`;
         const eventSource = new EventSource(sseUrl);
 
-        eventSource.addEventListener("playersUpdate", (event) => {
+        eventSource.addEventListener("playersUpdate", (event) => { // (וב-Creator: "gameUpdate")
             const data = JSON.parse(event.data);
             console.log("התקבל עדכון חי:", data);
 
-            if (data.type === "PLAYER_JOINED") {
-                setPlayersList(prevPlayers => [...prevPlayers, data.player]);
-                //צריך להוסיף בצד שרת שההודעה של שחקן שהצטרף שולחת גם את הפרטים שלו (לוודא שזה אותו אובייקט של השחקנים ששמנו גט גיים)
+            if (data.type === "PLAYERS_LIST_UPDATE") {
+                setPlayersList(data.players);
             }
-
         });
 
         eventSource.addEventListener("statusChange", (event) => {
             const data = JSON.parse(event.data);
             if (data.type === "GAME_STARTED") {
-                setLiveStatus("המשחק התחיל! בהצלחה!");
+                setLiveStatus("המשחק התחיל... בהצלחה!");
                 setStatus(1)
 
             }
@@ -102,9 +99,11 @@ function PlayerSide({ gameData }) {
                             :
                             <>
                                 <li>שחקנים בהמתנה...</li>
-                                {playersList.filter(player => player !== myName).map((player, index) => (
-                                    <li key={index}>{player}</li>
-                                ))}
+                                {playersList
+                                    .filter(p => p.fullName !== myName)
+                                    .map((p, index) => (
+                                        <li key={index}>{p.fullName} - ניקוד: {p.score}</li>
+                                    ))}
                             </>
                         }
                     </ul>):
