@@ -11,7 +11,7 @@ function UserDashboard(){
     const navigate = useNavigate();
     const [newGameName, setNewGameName] = useState("");
 
-    const [newGameType,setnewGameType] = useState(-1);
+    const [newGameType,setNewGameType] = useState(0);
     const [gameCode,setGameCode] = useState("");
 
     const [isModal1Open, setIsModal1Open] = useState(false);
@@ -91,12 +91,10 @@ function UserDashboard(){
                     onChange={(e) => setNewGameName(e.target.value)}
                 />
                 <select  onChange=
-                    {(e) => setnewGameType(e.target.value)}>
-                    <option value={-1} disabled hidden>בחר סוג וקושי של שאלות...</option>
+                    {(e) => setNewGameType(e.target.value)}>
                     <option value={0}>חשבון קל</option>
                     <option value={1}>חשבון בינוני</option>
-                    <option value={2}>חשבון מתקדם</option>
-                    <option value={3}>חשבון קשה</option>
+                    <option value={2}>חשבון קשה</option>
 
                 </select>
 
