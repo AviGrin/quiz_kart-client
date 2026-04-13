@@ -1,13 +1,10 @@
 import React from 'react';
+import '../styles/Input.css';
 
-const Input = ({ label, type = 'text', value, onChange, placeholder, style = {} }) => {
+const Input = ({ label, type = 'text', value, onChange, placeholder }) => {
     return (
-        <div style={{ marginBottom: '1rem', ...style }}>
-            {label && (
-                <label >
-                    {label}
-                </label>
-            )}
+        <div className="input-group">
+            {label && <label>{label}</label>}
             <input
                 type={type}
                 value={value}

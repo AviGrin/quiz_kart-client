@@ -1,17 +1,10 @@
 import React from 'react';
-import './Card.css';
+import '../styles/Card.css';
 
-const Card = ({ children, title, className = '', style = {} }) => {
+const Card = ({ children, title, className = '' }) => {
     return (
-        <div
-            className={`card-component ${className}`}
-            style={style}
-        >
-            {title && (
-                <h3 >
-                    {title}
-                </h3>
-            )}
+        <div className={`card-component ${className}`}>
+            {title && <h3>{title}</h3>}
             {children}
         </div>
     );

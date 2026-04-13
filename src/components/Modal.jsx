@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '../styles/Modal.css';
 
 const Modal = ({ isOpen, onClose, children, title }) => {
     useEffect(() => {
@@ -15,15 +16,15 @@ const Modal = ({ isOpen, onClose, children, title }) => {
     if (!isOpen) return null;
 
     return (
-        <div onClick={onClose}>
-            <div  onClick={e => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
                 {title && (
-                    <div>
-                        <h3 >{title}</h3>
-                        <button onClick={onClose} >&times;</button>
+                    <div className="modal-header">
+                        <h3>{title}</h3>
+                        <button className="modal-close-btn" onClick={onClose}>&times;</button>
                     </div>
                 )}
-                <div>
+                <div className="modal-body">
                     {children}
                 </div>
             </div>

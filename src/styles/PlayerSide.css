@@ -1,0 +1,53 @@
+.player-side {
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.player-side h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 6px;
+}
+
+.player-side h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 16px;
+}
+
+.player-waiting {
+    margin-top: 40px;
+}
+
+.player-waiting h4 {
+    color: #a0aec0;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.player-waiting p {
+    color: #718096;
+    font-size: 16px;
+}
+
+.player-progress-section {
+    max-width: 500px;
+    margin: 0 auto 20px;
+}
+
+@media (max-width: 600px) {
+    .player-side {
+        padding: 12px;
+    }
+
+    .player-side h2 {
+        font-size: 22px;
+    }
+
+    .player-side h3 {
+        font-size: 15px;
+    }
+}

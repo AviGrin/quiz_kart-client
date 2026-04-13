@@ -1,6 +1,23 @@
-export let HOST: any;
+export let HOST;
 // @ts-ignore
-//HOST = import.meta.env.VITE_HOST ?? "https://project-2026.onrender.com/";
- HOST = import.meta.env.VITE_HOST ?? "http://localhost:8080/"; //local
+HOST = import.meta.env.VITE_HOST ?? "http://localhost:8080/";
 
-//https://project-2026.onrender.com/
+export const ERROR_MESSAGES = {
+ 1001: "שם משתמש או סיסמה לא תקינים",
+ 1002: "שם משתמש או סיסמה שגויים",
+ 1003: "רק יוצר המשחק יכול להתחיל אותו",
+ 1004: "שם המשתמש כבר קיים במערכת",
+ 1005: "חסרים נתונים, אנא מלא את כל השדות",
+ 1006: "המשחק מלא, לא ניתן להצטרף",
+ 1007: "המשחק לא נמצא",
+ 1008: "המשחק לא פעיל",
+ 1009: "המשחק כבר התחיל",
+ 1010: "אין מספיק שחקנים להתחלת המשחק",
+ 1011: "אין לך הרשאה לפעולה זו",
+ 1012: "תשובה שגויה, נסה שוב",
+ 1013: "המשחק הסתיים"
+};
+
+export function getErrorMessage(errorCode) {
+ return ERROR_MESSAGES[errorCode] || "אירעה שגיאה לא צפויה";
+}

@@ -1,0 +1,132 @@
+.results-screen {
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    padding: 0 16px;
+}
+
+.winner-banner {
+    background: linear-gradient(135deg, #fefcbf, #fef3c7);
+    border: 2px solid #ecc94b;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.winner-trophy {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.winner-text {
+    font-size: 26px;
+    font-weight: 700;
+    color: #744210;
+}
+
+.results-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 24px;
+}
+
+.results-list {
+    list-style: none;
+    padding: 0;
+}
+
+.results-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border-radius: 12px;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+}
+
+.results-item:nth-child(1) {
+    background: linear-gradient(135deg, #fffff0, #fefcbf);
+    border-color: #ecc94b;
+}
+
+.results-item:nth-child(2) {
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+    border-color: #a0aec0;
+}
+
+.results-item:nth-child(3) {
+    background: linear-gradient(135deg, #fffaf0, #feebc8);
+    border-color: #dd6b20;
+}
+
+.results-rank {
+    font-size: 28px;
+    min-width: 44px;
+}
+
+.results-player-info {
+    flex: 1;
+    text-align: right;
+    margin: 0 16px;
+}
+
+.results-player-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.results-player-details {
+    font-size: 14px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+.results-score {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4361ee;
+}
+
+.results-back-btn {
+    margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+    .winner-text {
+        font-size: 20px;
+    }
+
+    .winner-trophy {
+        font-size: 36px;
+    }
+
+    .results-title {
+        font-size: 22px;
+    }
+
+    .results-item {
+        padding: 12px 14px;
+    }
+
+    .results-rank {
+        font-size: 22px;
+        min-width: 36px;
+    }
+
+    .results-player-name {
+        font-size: 16px;
+    }
+
+    .results-score {
+        font-size: 20px;
+    }
+
+    .results-player-info {
+        margin: 0 10px;
+    }
+}

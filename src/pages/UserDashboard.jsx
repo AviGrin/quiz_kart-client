@@ -1,18 +1,18 @@
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
-import {HOST} from "../Constants.js";
+import { HOST, getErrorMessage } from "../Constants";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
+import '../styles/UserDashboard.css';
 
-function UserDashboard(){
+function UserDashboard() {
     const navigate = useNavigate();
     const [newGameName, setNewGameName] = useState("");
-
-    const [newGameType,setNewGameType] = useState(0);
-    const [gameCode,setGameCode] = useState("");
+    const [newGameType, setNewGameType] = useState(0);
+    const [gameCode, setGameCode] = useState("");
 
     const [isModal1Open, setIsModal1Open] = useState(false);
     const [isModal2Open, setIsModal2Open] = useState(false);
@@ -20,120 +20,102 @@ function UserDashboard(){
     useEffect(() => {
         const token = Cookies.get("token");
         if (!token) {
-            navigate("/")
-        } else {
-            console.log("hi");
+            navigate("/");
         }
     }, [navigate]);
+
     const handleNewGame = () => {
         const token = Cookies.get("token");
-        axios.get(HOST+"new-game", {
-            params: {
-                token: token,
-                newGameName: newGameName,
-                gameType: newGameType
-            }
+        axios.post(HOST + "new-game", {
+            token: token,
+            newGameName: newGameName,
+            gameType: parseInt(newGameType)
         }).then(response => {
             if (response.data.success) {
-                setIsModal1Open(false)
-                navigate("/game/" + response.data.id);
+                setIsModal1Open(false);
+                navigate("/game/" + response.data.gameId);
             } else {
-                alert("יצירת המשחק נכשלה: " + response.data.message);
+                alert(getErrorMessage(response.data.errorCode));
             }
-        }).catch(err => {
-            console.error("Error creating game:", err);
-            alert("שגיאה בתקשורת עם השרת");
+        }).catch(() => {
+            alert("שגיאת תקשורת, נסה שוב מאוחר יותר");
         });
     };
+
     const handleJoinGame = () => {
         const token = Cookies.get("token");
-
-
-
-        axios.get(HOST+"/join-game", {
-            params: {
-                token: token,
-                gameCode: gameCode
-            }
+        axios.post(HOST + "join-game", {
+            token: token,
+            gameCode: gameCode
         }).then(response => {
             if (response.data.success) {
-                setIsModal2Open(false)
-
-                navigate("/game/" + response.data.id);
+                setIsModal2Open(false);
+                navigate("/game/" + response.data.gameId);
             } else {
-                alert("ההתחברות לחדר נכשלה בגלל : " + response.data.message);
+                alert(getErrorMessage(response.data.errorCode));
             }
-        }).catch(err => {
-            console.error("Error joining game:", err);
-            alert("שגיאה בתקשורת עם השרת");
+        }).catch(() => {
+            alert("שגיאת תקשורת, נסה שוב מאוחר יותר");
         });
     };
 
+    const handleLogout = () => {
+        Cookies.remove("token");
+        navigate("/");
+    };
 
+    return (
+        <div className="dashboard-page">
+            <h1>ברוך הבא למרוץ הלמידה!</h1>
 
-    return(
-        <>
-            <Button text={"התחל משחק חדש"} onClick={() => setIsModal1Open(true)}/>
+            <div className="dashboard-buttons">
+                <Button text="צור משחק חדש (מורה)" onClick={() => setIsModal1Open(true)} />
+                <Button text="היכנס למשחק (תלמיד)" onClick={() => setIsModal2Open(true)} />
+                <Button text="התנתק" onClick={handleLogout} className="btn-logout" />
+            </div>
 
-
-            <Modal
-                isOpen={isModal1Open}
-                onClose={() => setIsModal1Open(false)}
-            >
-                <h2>הגדרות פרופיל</h2>
-                <p>כאן תוכל לעדכן את הפרטים שלך:</p>
-
-
+            <Modal isOpen={isModal1Open} onClose={() => setIsModal1Open(false)} title="יצירת חדר חדש">
                 <Input
-                    label="שם משחק"
-                    placeholder="הכנס שם למשחק"
+                    label="שם החדר"
+                    placeholder="למשל: כיתה ד'2"
                     value={newGameName}
                     onChange={(e) => setNewGameName(e.target.value)}
                 />
-                <select  onChange=
-                    {(e) => setNewGameType(e.target.value)}>
-                    <option value={0}>חשבון קל</option>
-                    <option value={1}>חשבון בינוני</option>
-                    <option value={2}>חשבון קשה</option>
 
-                </select>
-
+                <div className="dashboard-select-group">
+                    <label>רמת קושי:</label>
+                    <select
+                        value={newGameType}
+                        onChange={(e) => setNewGameType(e.target.value)}
+                    >
+                        <option value={0}>רמה קלה (חיבור וחיסור)</option>
+                        <option value={1}>רמה בינונית (כפל וחילוק)</option>
+                        <option value={2}>רמה קשה (אחוזים)</option>
+                    </select>
+                </div>
 
                 <Button
-                    text={"צור משחק חדש"}
-                    disabled={!newGameName.trim() || newGameType === 4}
+                    text="צור משחק חדש"
+                    disabled={!newGameName.trim()}
                     onClick={handleNewGame}
-                >
-                </Button>
+                />
             </Modal>
 
-            <Button text={"היכנס למשחק"} onClick={() => setIsModal2Open(true)}/>
-
-            <Modal
-                isOpen={isModal2Open}
-                onClose={() => setIsModal2Open(false)}
-            >
-                <h2>קוד משחק</h2>
-                <p>הכנס את קוד המשחק שקיבלת מהמנהל שלו</p>
-
-
+            <Modal isOpen={isModal2Open} onClose={() => setIsModal2Open(false)} title="הצטרפות למשחק">
+                <p className="modal-description">הכנס את קוד המשחק שקיבלת מהמורה:</p>
                 <Input
                     label="קוד משחק"
                     placeholder="הכנס קוד משחק"
                     value={gameCode}
-                    onChange={(e) => setGameCode(e.target.value)}
+                    onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                 />
-
                 <Button
-                    text={"היכנס למשחק"}
-                    disabled={!gameCode.trim() ||gameCode.length!==6}
+                    text="היכנס למשחק"
+                    disabled={!gameCode.trim() || gameCode.length !== 6}
                     onClick={handleJoinGame}
-                >
-                </Button>
+                />
             </Modal>
-
-
-        </>
+        </div>
     );
 }
 

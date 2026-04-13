@@ -1,41 +1,39 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import UserDashboard from "./pages/UserDashboard.jsx";
-
+import UserDashboard from "./pages/UserDashboard";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { HOST } from "./Constants";
 
 function DashboardWrapper() {
     const navigate = useNavigate();
-    const [success,setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         const token = Cookies.get("token");
         if (!token) {
-            navigate("/")
+            navigate("/");
         } else {
             axios.get(HOST + "get-default-params", {
-                params: { token: token }
+                params: { token }
             }).then(response => {
-                setSuccess(response.data.success)
-            })
+                if (response.data.success) {
+                    setSuccess(true);
+                } else {
+                    Cookies.remove("token");
+                    navigate("/");
+                }
+            }).catch(() => {
+                navigate("/");
+            });
         }
     }, [navigate]);
 
-
     if (success) {
-        return (
-            <UserDashboard />
-        )
-    } else {
-        return (
-            <div >
-                Loading...
-            </div>
-        )
+        return <UserDashboard />;
     }
 
+    return <div className="game-page-loading">טוען...</div>;
 }
 
 export default DashboardWrapper;

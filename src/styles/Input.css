@@ -1,0 +1,27 @@
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #4a5568;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: 'Rubik', sans-serif;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    direction: rtl;
+}
+
+.input-group input:focus {
+    border-color: #4361ee;
+}

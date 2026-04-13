@@ -1,0 +1,50 @@
+.scoreboard {
+    max-width: 800px;
+    margin: 20px auto 0;
+    text-align: right;
+}
+
+.scoreboard-row {
+    padding: 16px 20px;
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.scoreboard-row:first-child {
+    border-color: #f6e05e;
+    background-color: #fffff0;
+}
+
+.scoreboard-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scoreboard-player-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.scoreboard-player-stats {
+    font-size: 14px;
+    color: #4a5568;
+    display: flex;
+    gap: 14px;
+}
+
+@media (max-width: 600px) {
+    .scoreboard-row-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .scoreboard-player-stats {
+        font-size: 13px;
+        gap: 10px;
+    }
+}

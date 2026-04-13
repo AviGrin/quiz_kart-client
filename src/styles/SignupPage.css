@@ -1,0 +1,43 @@
+.signup-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.signup-error {
+    background-color: #fed7d7;
+    color: #c53030;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.signup-fields {
+    display: grid;
+    gap: 4px;
+}
+
+.signup-actions {
+    margin-top: 24px;
+}
+
+.signup-link-area {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: #718096;
+}
+
+.signup-link-area button {
+    background: none;
+    border: none;
+    color: #4361ee;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+}

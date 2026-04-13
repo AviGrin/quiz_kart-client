@@ -1,24 +1,21 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage.jsx";
-import SignupPage from "./pages/SignupPage.jsx";
-import DashboardWrapper from "./DashboardWrapper.jsx";
-import GamePage from "./pages/GamePage.jsx";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import DashboardWrapper from "./DashboardWrapper";
+import GamePage from "./pages/GamePage";
 
 function App() {
-
-
-  return (
-      <BrowserRouter>
-          <Routes>
-              <Route path={"/"} element={<LoginPage />} />
-              <Route path={"/signup"} element={<SignupPage />} />
-              <Route path={"/dashboard"} element={<DashboardWrapper />} />
-              <Route path={"/game/:id"} element={<GamePage />} />
-
-          </Routes>
-      </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/dashboard" element={<DashboardWrapper />} />
+                <Route path="/game/:id" element={<GamePage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;

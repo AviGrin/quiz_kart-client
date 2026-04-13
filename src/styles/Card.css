@@ -1,0 +1,16 @@
+.card-component {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 420px;
+}
+
+.card-component h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1a202c;
+    text-align: center;
+}
