@@ -6,9 +6,28 @@ function QuestionCard({ question, feedback, loading, onAnswerClick }) {
         return <p className="question-loading">טוען שאלה...</p>;
     }
 
+    // פונקציה חכמה שבודקת אם הטקסט מכיל אותיות בעברית
+    const containsHebrew = (text) => /[\u0590-\u05FF]/.test(text);
+
+    // אם אין עברית, זה תרגיל מתמטי טהור שחייב להיות משמאל לימין
+    const isMathOnly = !containsHebrew(question.text);
+
     return (
         <div className="question-card">
-            <h2 className="question-text">{question.text}</h2>
+
+            {/* כאן עשינו את הבידוד המוחלט */}
+            <h2 className="question-text">
+                {isMathOnly ? (
+                    <bdi
+                        dir="ltr"
+                        style={{ display: 'inline-block', unicodeBidi: 'isolate' }}
+                    >
+                        {question.text}
+                    </bdi>
+                ) : (
+                    <span>{question.text}</span>
+                )}
+            </h2>
 
             <div className="question-feedback">
                 {feedback === 'correct' && <span className="feedback-correct">נכון מאוד!</span>}

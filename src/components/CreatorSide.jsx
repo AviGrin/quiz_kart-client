@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { HOST, getErrorMessage } from '../Constants';
 import WaitingLobby from "./WaitingLobby";
-import Scoreboard from "./Scoreboard";
-import RaceTrack from "./RaceTrack";
 import GameTimer from "./GameTimer";
 import ResultsScreen from "./ResultsScreen";
 import Button from "./Button";
+import '../styles/CreatorSide.css';
+import RacingTrack from "../components/RaceingTrack.jsx"; // <--- ניצור את הקומפוננטה הזו
 import '../styles/CreatorSide.css';
 
 function CreatorSide({ gameData }) {
@@ -96,11 +96,19 @@ function CreatorSide({ gameData }) {
 
     if (status === 1) {
         return (
-            <div className="creator-side">
-                <h2 className="creator-title">דשבורד מורה - המשחק רץ</h2>
-                <GameTimer startedAt={startedAt} />
-                <RaceTrack players={playersList} trackLength={gameData?.trackLength || 1000} />
-                <Scoreboard players={playersList} trackLength={gameData?.trackLength} />
+            <div className="creator-side running-game">
+                <h2 className="creator-title">דשבורד מורה - המירוץ הגדול!</h2>
+                <div className="game-header-info">
+                    <GameTimer startedAt={startedAt} />
+                    {/* אפשר להוסיף כאן מקרא או מידע כללי אם רוצים */}
+                </div>
+
+                {/* 1. מחליפים את ה-Scoreboard במסלול המירוצים הרחב והחדש */}
+                <RacingTrack
+                    players={playersList}
+                    trackLength={gameData?.trackLength}
+                />
+
                 <div className="creator-end-game">
                     <Button text="סיים משחק" onClick={handleEndGame} className="btn-end-game" />
                 </div>
