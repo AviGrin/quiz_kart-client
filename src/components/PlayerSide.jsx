@@ -16,7 +16,7 @@ function PlayerSide({ gameData }) {
     const [status, setStatus] = useState(gameData?.status || 0);
     const [playersList, setPlayersList] = useState(gameData?.players || []);
     const [myName, setMyName] = useState("");
-    const [myScore, setMyScore] = useState(0);
+    const [myId, setMyId] = useState(null);
     const [startedAt, setStartedAt] = useState(gameData?.startedAt || null);
     const [rankings, setRankings] = useState(null);
     const [winnerName, setWinnerName] = useState(null);
@@ -26,6 +26,9 @@ function PlayerSide({ gameData }) {
     const [loading, setLoading] = useState(false);
 
     const trackLength = gameData?.trackLength || 1000;
+
+    const myPlayer = myId ? playersList.find(p => p.id === myId) : null;
+    const myScore = myPlayer ? myPlayer.score : 0;
 
     const fetchQuestion = useCallback(() => {
         const token = Cookies.get("token");
@@ -49,12 +52,12 @@ function PlayerSide({ gameData }) {
             .then(res => {
                 if (res.data.success) {
                     setMyName(res.data.fullName);
+                    setMyId(res.data.id);
                 }
             });
 
         if (gameData?.status === 1) {
-            setStatus(1);
-            if (gameData?.startedAt) setStartedAt(gameData.startedAt);
+            setTimeout(() => fetchQuestion(), 0);
         }
 
         const sseUrl = `${HOST}game-subscribe?token=${token}&gameId=${id}`;
@@ -70,6 +73,7 @@ function PlayerSide({ gameData }) {
                 case "GAME_STARTED":
                     setStatus(1);
                     if (data.startedAt) setStartedAt(data.startedAt);
+                    fetchQuestion();
                     break;
                 case "PLAYER_MOVED":
                     setPlayersList(prev => prev.map(p => p.id === data.player.id ? data.player : p));
@@ -85,13 +89,7 @@ function PlayerSide({ gameData }) {
         });
 
         return () => eventSource.close();
-    }, [id, gameData]);
-
-    useEffect(() => {
-        if (status === 1 && !question && !loading) {
-            fetchQuestion();
-        }
-    }, [status, question, loading, fetchQuestion]);
+    }, [id, gameData, fetchQuestion]);
 
     const handleAnswerClick = (answer) => {
         if (loading) return;
@@ -102,7 +100,6 @@ function PlayerSide({ gameData }) {
             .then(res => {
                 if (res.data.success) {
                     setFeedback('correct');
-                    setMyScore(prev => prev + 100);
                     setTimeout(() => fetchQuestion(), 800);
                 } else {
                     setFeedback('wrong');

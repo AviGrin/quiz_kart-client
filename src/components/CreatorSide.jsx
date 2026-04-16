@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { HOST, getErrorMessage } from '../Constants';
 import WaitingLobby from "./WaitingLobby";
 import Scoreboard from "./Scoreboard";
+import RaceTrack from "./RaceTrack";
 import GameTimer from "./GameTimer";
 import ResultsScreen from "./ResultsScreen";
 import Button from "./Button";
@@ -98,6 +99,7 @@ function CreatorSide({ gameData }) {
             <div className="creator-side">
                 <h2 className="creator-title">דשבורד מורה - המשחק רץ</h2>
                 <GameTimer startedAt={startedAt} />
+                <RaceTrack players={playersList} trackLength={gameData?.trackLength || 1000} />
                 <Scoreboard players={playersList} trackLength={gameData?.trackLength} />
                 <div className="creator-end-game">
                     <Button text="סיים משחק" onClick={handleEndGame} className="btn-end-game" />
