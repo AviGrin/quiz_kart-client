@@ -8,8 +8,8 @@ import GameTimer from "./GameTimer";
 import ResultsScreen from "./ResultsScreen";
 import Button from "./Button";
 import '../styles/CreatorSide.css';
-import RacingTrack from "../components/RaceingTrack.jsx"; // <--- ניצור את הקומפוננטה הזו
-import '../styles/CreatorSide.css';
+import RacingTrack from "../components/RacingTrack.jsx"; // <--- ניצור את הקומפוננטה הזו
+
 
 function CreatorSide({ gameData }) {
     const { id } = useParams();
