@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { HOST, getErrorMessage } from "../Constants";
+import { HOST, getErrorMessage } from "../Constants.js";
 import Cookies from "js-cookie";
 import Button from "../components/Button";
 import Input from "../components/Input";

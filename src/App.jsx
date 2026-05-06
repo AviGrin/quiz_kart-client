@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DashboardWrapper from "./DashboardWrapper";
@@ -13,6 +13,7 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/dashboard" element={<DashboardWrapper />} />
                 <Route path="/game/:id" element={<GamePage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,0 +1,162 @@
+.junction-choice {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.junction-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 6px;
+    animation: junctionBounce 0.6s ease-out;
+}
+
+.junction-subtitle {
+    font-size: 16px;
+    color: #718096;
+    margin-bottom: 28px;
+}
+
+@keyframes junctionBounce {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.junction-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.junction-option {
+    flex: 1;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px;
+    border: 3px solid transparent;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.junction-option:hover:not(:disabled) {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.junction-option:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.junction-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.junction-option.autostrada {
+    background: linear-gradient(135deg, #fff5f5, #fed7d7);
+    border-color: #fc8181;
+}
+
+.junction-option.autostrada:hover:not(:disabled) {
+    border-color: #e53e3e;
+}
+
+.junction-option.dirtroad {
+    background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+    border-color: #68d391;
+}
+
+.junction-option.dirtroad:hover:not(:disabled) {
+    border-color: #38a169;
+}
+
+.junction-icon {
+    font-size: 48px;
+}
+
+.junction-option-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.junction-option-desc {
+    font-size: 14px;
+    color: #718096;
+}
+
+.junction-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.junction-reward {
+    font-size: 14px;
+    font-weight: 600;
+    color: #38a169;
+}
+
+.junction-risk {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e53e3e;
+}
+
+.junction-safe {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4361ee;
+}
+
+.junction-tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 6px;
+}
+
+.tag-risk {
+    background-color: #e53e3e;
+    color: #fff;
+}
+
+.tag-safe {
+    background-color: #38a169;
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .junction-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .junction-option {
+        max-width: 100%;
+        width: 100%;
+        padding: 20px 16px;
+    }
+
+    .junction-title {
+        font-size: 24px;
+    }
+
+    .junction-icon {
+        font-size: 36px;
+    }
+
+    .junction-option-title {
+        font-size: 18px;
+    }
+}

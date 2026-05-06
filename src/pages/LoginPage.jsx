@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { HOST, getErrorMessage } from '../Constants';
+import { HOST, getErrorMessage } from '../Constants.js';
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Card from "../components/Card";

@@ -11,6 +11,18 @@
     margin-bottom: 16px;
 }
 
+.creator-game-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.creator-track-area {
+    flex: 1;
+    min-width: 0;
+}
+
 .creator-end-game {
     margin-top: 30px;
 }
@@ -21,6 +33,16 @@
 
 .btn-end-game:hover:not(:disabled) {
     background-color: #c53030;
+}
+
+@media (max-width: 900px) {
+    .creator-game-layout {
+        flex-direction: column;
+    }
+
+    .creator-track-area {
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {

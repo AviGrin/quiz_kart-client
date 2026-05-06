@@ -38,14 +38,17 @@
 }
 
 .results-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
     margin: 8px 0;
     border-radius: 12px;
     background-color: #fff;
     border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.results-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .results-item:nth-child(1) {
@@ -61,6 +64,13 @@
 .results-item:nth-child(3) {
     background: linear-gradient(135deg, #fffaf0, #feebc8);
     border-color: #dd6b20;
+}
+
+.results-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
 }
 
 .results-rank {
@@ -80,8 +90,8 @@
     color: #1a202c;
 }
 
-.results-player-details {
-    font-size: 14px;
+.results-player-summary {
+    font-size: 13px;
     color: #718096;
     margin-top: 4px;
 }
@@ -90,6 +100,57 @@
     font-size: 24px;
     font-weight: 700;
     color: #4361ee;
+}
+
+.results-expanded {
+    padding: 0 20px 16px;
+    animation: expandSlide 0.25s ease-out;
+}
+
+@keyframes expandSlide {
+    0% {
+        opacity: 0;
+        max-height: 0;
+    }
+    100% {
+        opacity: 1;
+        max-height: 200px;
+    }
+}
+
+.results-stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 90px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #718096;
+    margin-top: 2px;
+}
+
+.results-tap-hint {
+    font-size: 13px;
+    color: #a0aec0;
+    margin-top: 16px;
 }
 
 .results-back-btn {
@@ -109,7 +170,7 @@
         font-size: 22px;
     }
 
-    .results-item {
+    .results-item-main {
         padding: 12px 14px;
     }
 
@@ -128,5 +189,14 @@
 
     .results-player-info {
         margin: 0 10px;
+    }
+
+    .stat-box {
+        min-width: 75px;
+        padding: 8px 10px;
+    }
+
+    .stat-value {
+        font-size: 16px;
     }
 }

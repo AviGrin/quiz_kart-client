@@ -29,7 +29,7 @@ function UserDashboard() {
         axios.post(HOST + "new-game", {
             token: token,
             newGameName: newGameName,
-            gameType: parseInt(newGameType)
+            gameType: newGameType
         }).then(response => {
             if (response.data.success) {
                 setIsModal1Open(false);
@@ -86,7 +86,7 @@ function UserDashboard() {
                     <label>רמת קושי:</label>
                     <select
                         value={newGameType}
-                        onChange={(e) => setNewGameType(e.target.value)}
+                        onChange={(e) => setNewGameType(Number(e.target.value))}
                     >
                         <option value={0}>רמה קלה (חיבור וחיסור)</option>
                         <option value={1}>רמה בינונית (כפל וחילוק)</option>

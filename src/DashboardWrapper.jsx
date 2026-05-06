@@ -3,7 +3,7 @@ import axios from "axios";
 import UserDashboard from "./pages/UserDashboard";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
-import { HOST } from "./Constants";
+import { HOST } from "./Constants.js";
 
 function DashboardWrapper() {
     const navigate = useNavigate();

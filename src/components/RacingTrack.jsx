@@ -7,8 +7,8 @@ function RacingTrack({ players, trackLength }) {
 
     const sortedPlayers = [...players].sort((a, b) => a.id - b.id);
 
-    const LANE_HEIGHT = 110; // גובה כל נתיב
-    const CURB_HEIGHT = 15;  // עובי השוליים
+    const LANE_HEIGHT = 110;
+    const CURB_HEIGHT = 15;
     const numPlayers = sortedPlayers.length;
 
     const roadHeight = numPlayers * LANE_HEIGHT;
@@ -16,17 +16,12 @@ function RacingTrack({ players, trackLength }) {
 
     return (
         <div className="racing-track-container" style={{ height: `${totalHeight}px` }}>
-            {/* שוליים אדומים-לבנים - מודבקים לקצוות בלי רווח */}
             <div className="curb top" />
             <div className="curb bottom" />
 
-            {/* קו סיום מקצה לקצה */}
             <div className="finish-line-global"></div>
 
-            {/* הכביש שממלא הכל - הריצוף יקרה אוטומטית ב-CSS */}
             <div className="asphalt-road">
-
-                {/* קווי הפרדה בין הנתיבים */}
                 {Array.from({ length: numPlayers - 1 }).map((_, i) => (
                     <div
                         key={`line-${i}`}
@@ -37,9 +32,6 @@ function RacingTrack({ players, trackLength }) {
 
                 {sortedPlayers.map((player, index) => {
                     const percent = Math.min(100, Math.max(0, (player.score / trackLength) * 100));
-                    // בגלל שהעוגן עכשיו הוא מרכז המכונית (width: 0):
-                    // 1. נתחיל ב-60px מהצד (כדי שחצי מכונית לא תהיה בחוץ)
-                    // 2. נסיים כשהמרכז נוגע בקו (בערך 110px מהקצה)
                     const startOffset = 60;
                     const finishLineBuffer = 110;
 
@@ -53,7 +45,6 @@ function RacingTrack({ players, trackLength }) {
                             style={{
                                 right: rightPosition,
                                 top: `${topPosition}px`,
-                                /* transform עכשיו רק מטפל במרכוז האנכי, כי המרכוז האופקי קורה בגלל width: 0 */
                                 transform: 'translate(0, -50%)'
                             }}
                         >

@@ -1,5 +1,4 @@
 export let HOST;
-// @ts-ignore
 HOST = import.meta.env.VITE_HOST ?? "http://localhost:8080/";
 
 export const ERROR_MESSAGES = {
@@ -15,7 +14,8 @@ export const ERROR_MESSAGES = {
  1010: "אין מספיק שחקנים להתחלת המשחק",
  1011: "אין לך הרשאה לפעולה זו",
  1012: "תשובה שגויה, נסה שוב",
- 1013: "המשחק הסתיים"
+ 1013: "המשחק הסתיים",
+ 1014: "רק יוצר המשחק יכול לסיים אותו"
 };
 
 export function getErrorMessage(errorCode) {

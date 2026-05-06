@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { HOST } from '../Constants';
+import { HOST } from '../Constants.js';
 import PlayerSide from "../components/PlayerSide";
 import CreatorSide from "../components/CreatorSide";
 import '../styles/GamePage.css';
