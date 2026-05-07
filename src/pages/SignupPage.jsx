@@ -1,77 +1,85 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { HOST, getErrorMessage } from "../Constants.js";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
+import { HOST, getErrorMessage } from "../Constants";
+import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import Card from "../components/Card";
 import '../styles/SignupPage.css';
 
 function SignupPage() {
     const navigate = useNavigate();
-
+    const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [error, setError] = useState("");
 
     const handleSignup = () => {
-        setErrorMessage("");
-        axios.post(HOST + "signup", { username, password, fullName })
-            .then((response) => {
-                if (response.data.success) {
-                    Cookies.set("token", response.data.token);
-                    navigate("/dashboard");
-                } else {
-                    setErrorMessage(getErrorMessage(response.data.errorCode));
-                }
-            }).catch(() => {
-            setErrorMessage("שגיאת תקשורת, נסה שוב מאוחר יותר");
+        setError("");
+        axios.post(HOST + "signup", {
+            fullName: fullName,
+            username: username,
+            password: password
+        }).then(response => {
+            if (response.data.success) {
+                Cookies.set("token", response.data.token);
+                navigate("/dashboard");
+            } else {
+                setError(getErrorMessage(response.data.errorCode));
+            }
+        }).catch(() => {
+            setError("שגיאת תקשורת, נסה שוב מאוחר יותר");
         });
     };
 
     return (
         <div className="signup-page">
-            <Card title="צור חשבון חדש">
-                {errorMessage && (
-                    <div className="signup-error">{errorMessage}</div>
-                )}
+            <motion.div
+                className="signup-card"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+                <span className="signup-logo">🏁</span>
+                <h1 className="signup-title">הרשמה למרוץ</h1>
+                <p className="signup-subtitle">צור חשבון חדש והצטרף למשחק!</p>
 
-                <div className="signup-fields">
+                <div className="signup-form">
+                    <Input
+                        label="שם מלא"
+                        placeholder="הכנס שם מלא"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                    />
                     <Input
                         label="שם משתמש"
-                        placeholder="בחר שם משתמש באנגלית"
+                        placeholder="הכנס שם משתמש"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <Input
-                        label="סיסמה"
+                        label="סיסמה (6 תווים)"
+                        placeholder="הכנס סיסמה"
                         type="password"
-                        placeholder="סיסמה (6 תווים)"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Input
-                        label="שם מלא"
-                        placeholder="שם פרטי ומשפחה"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                    />
                 </div>
+
+                {error && <p className="signup-error">{error}</p>}
 
                 <div className="signup-actions">
                     <Button
-                        text="הרשמה"
+                        text="הירשם"
                         onClick={handleSignup}
-                        disabled={password.length !== 6 || username.length === 0 || !fullName.includes(" ")}
+                        disabled={!fullName.trim() || !username.trim() || password.length !== 6}
                     />
-                    <div className="signup-link-area">
-                        <span>כבר יש לך חשבון? </span>
-                        <button onClick={() => navigate("/")}>היכנס</button>
-                    </div>
+                    <p className="signup-link">
+                        כבר יש לך חשבון? <Link to="/">התחבר</Link>
+                    </p>
                 </div>
-            </Card>
+            </motion.div>
         </div>
     );
 }

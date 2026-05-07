@@ -1,17 +1,18 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import '../styles/Button.css';
 
-const Button = ({ text, onClick, disabled, type = 'button', className = '' }) => {
+function Button({ text, onClick, disabled, className }) {
     return (
-        <button
-            type={type}
+        <motion.button
+            className={`game-btn ${className || ''}`}
             onClick={onClick}
             disabled={disabled}
-            className={`btn ${className}`}
+            whileTap={!disabled ? { scale: 0.95 } : {}}
         >
             {text}
-        </button>
+        </motion.button>
     );
-};
+}
 
 export default Button;

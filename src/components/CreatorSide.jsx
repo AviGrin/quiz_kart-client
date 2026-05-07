@@ -3,12 +3,15 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { HOST, getErrorMessage } from '../Constants';
+import { motion } from 'framer-motion';
+import { IoTimer, IoPeople, IoTrophy } from 'react-icons/io5';
 import WaitingLobby from "./WaitingLobby";
 import GameTimer from "./GameTimer";
 import ResultsScreen from "./ResultsScreen";
 import Button from "./Button";
 import RacingTrack from "./RacingTrack";
 import EventFeed from "./EventFeed";
+import Leaderboard from "./Leaderboard";
 import '../styles/CreatorSide.css';
 
 const FEED_EVENT_TYPES = ["OVERTAKE", "STREAK", "LUCK_EVENT", "JUNCTION_CHOSEN"];
@@ -134,23 +137,39 @@ function CreatorSide({ gameData }) {
     if (status === 1) {
         return (
             <div className="creator-side running-game">
-                <h2 className="creator-title">דשבורד מורה - המירוץ הגדול!</h2>
-                <div className="game-header-info">
-                    <GameTimer startedAt={startedAt} />
-                </div>
-
-                <div className="creator-game-layout">
-                    <div className="creator-track-area">
-                        <RacingTrack
-                            players={playersList}
-                            trackLength={gameData?.trackLength}
-                        />
-
-                        <div className="creator-end-game">
-                            <Button text="סיים משחק" onClick={handleEndGame} className="btn-end-game" />
+                <motion.div
+                    className="creator-header"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    <div className="creator-header-right">
+                        <h2 className="creator-title">{gameData?.gameName || 'המירוץ הגדול'}</h2>
+                        <div className="creator-header-badges">
+                            <span className="header-badge">
+                                <IoPeople /> {playersList.length} שחקנים
+                            </span>
                         </div>
                     </div>
+                    <div className="creator-header-center">
+                        <GameTimer startedAt={startedAt} />
+                    </div>
+                    <div className="creator-header-left">
+                        <Button text="סיים משחק" onClick={handleEndGame} className="btn-end-game" />
+                    </div>
+                </motion.div>
 
+                <div className="creator-track-section">
+                    <RacingTrack
+                        players={playersList}
+                        trackLength={gameData?.trackLength}
+                    />
+                </div>
+
+                <div className="creator-bottom-panels">
+                    <Leaderboard
+                        players={playersList}
+                        trackLength={gameData?.trackLength || 1000}
+                    />
                     <EventFeed events={feedEvents} />
                 </div>
             </div>

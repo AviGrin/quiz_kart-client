@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { motion } from "framer-motion";
 import { HOST, getErrorMessage } from "../Constants";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
@@ -66,11 +67,48 @@ function UserDashboard() {
 
     return (
         <div className="dashboard-page">
-            <h1>ברוך הבא למרוץ הלמידה!</h1>
+            <motion.div
+                className="dashboard-header"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <span className="dashboard-header-icon">🏎️</span>
+                <h1 className="dashboard-title">מרוץ הלמידה</h1>
+                <p className="dashboard-subtitle">בחר מה תרצה לעשות</p>
+            </motion.div>
 
-            <div className="dashboard-buttons">
-                <Button text="צור משחק חדש (מורה)" onClick={() => setIsModal1Open(true)} />
-                <Button text="היכנס למשחק (תלמיד)" onClick={() => setIsModal2Open(true)} />
+            <div className="dashboard-cards">
+                <motion.div
+                    className="dashboard-card"
+                    onClick={() => setIsModal1Open(true)}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                >
+                    <span className="dashboard-card-icon">🏁</span>
+                    <h3 className="dashboard-card-title">צור משחק חדש</h3>
+                    <p className="dashboard-card-desc">פתח חדר מרוץ חדש והזמן שחקנים להצטרף</p>
+                </motion.div>
+
+                <motion.div
+                    className="dashboard-card"
+                    onClick={() => setIsModal2Open(true)}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                >
+                    <span className="dashboard-card-icon">🎮</span>
+                    <h3 className="dashboard-card-title">הצטרף למשחק</h3>
+                    <p className="dashboard-card-desc">הכנס קוד משחק והתחל להתחרות</p>
+                </motion.div>
+            </div>
+
+            <div className="dashboard-logout">
                 <Button text="התנתק" onClick={handleLogout} className="btn-logout" />
             </div>
 
@@ -102,7 +140,7 @@ function UserDashboard() {
             </Modal>
 
             <Modal isOpen={isModal2Open} onClose={() => setIsModal2Open(false)} title="הצטרפות למשחק">
-                <p className="modal-description">הכנס את קוד המשחק שקיבלת מהמורה:</p>
+                <p className="modal-description">הכנס את קוד המשחק שקיבלת:</p>
                 <Input
                     label="קוד משחק"
                     placeholder="הכנס קוד משחק"

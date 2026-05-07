@@ -1,56 +1,113 @@
 .creator-side {
-    padding: 30px 20px;
-    text-align: center;
     min-height: 100vh;
 }
 
-.creator-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 16px;
-}
-
-.creator-game-layout {
+.creator-side.running-game {
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    margin-top: 20px;
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 16px;
 }
 
-.creator-track-area {
+.creator-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px 24px;
+}
+
+.creator-header-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.creator-title {
+    font-size: 20px;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.creator-header-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.creator-header-center {
+    display: flex;
+    align-items: center;
+}
+
+.creator-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.creator-header-left .game-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+}
+
+.creator-track-section {
+    width: 100%;
+}
+
+.creator-bottom-panels {
+    display: flex;
+    gap: 16px;
+    min-height: 250px;
+}
+
+.creator-bottom-panels .leaderboard {
+    flex: 1.2;
+}
+
+.creator-bottom-panels .event-feed {
     flex: 1;
-    min-width: 0;
-}
-
-.creator-end-game {
-    margin-top: 30px;
-}
-
-.btn-end-game {
-    background-color: #e53e3e;
-}
-
-.btn-end-game:hover:not(:disabled) {
-    background-color: #c53030;
 }
 
 @media (max-width: 900px) {
-    .creator-game-layout {
+    .creator-header {
         flex-direction: column;
+        gap: 12px;
+        text-align: center;
     }
 
-    .creator-track-area {
-        width: 100%;
+    .creator-header-right {
+        align-items: center;
+    }
+
+    .creator-bottom-panels {
+        flex-direction: column;
     }
 }
 
 @media (max-width: 600px) {
-    .creator-side {
-        padding: 16px 12px;
+    .creator-side.running-game {
+        padding: 10px 12px;
+        gap: 12px;
     }
 
     .creator-title {
-        font-size: 20px;
+        font-size: 17px;
+    }
+
+    .creator-header {
+        padding: 12px 16px;
     }
 }

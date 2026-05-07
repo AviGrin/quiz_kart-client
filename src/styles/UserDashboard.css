@@ -1,84 +1,145 @@
 .dashboard-page {
-    text-align: center;
-    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
+    padding: 40px 20px;
 }
 
-.dashboard-page h1 {
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.dashboard-header-icon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.dashboard-title {
     font-size: 32px;
     font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 10px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
 }
 
-.dashboard-buttons {
+.dashboard-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+.dashboard-cards {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
+    gap: 24px;
     flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 700px;
+}
+
+.dashboard-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 340px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 36px 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.dashboard-card:hover {
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-glow);
+}
+
+.dashboard-card-icon {
+    font-size: 44px;
+}
+
+.dashboard-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.dashboard-card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.dashboard-logout {
+    margin-top: 16px;
 }
 
 .dashboard-select-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
     text-align: right;
 }
 
 .dashboard-select-group label {
-    display: block;
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 6px;
-    color: #4a5568;
+    color: var(--text-secondary);
 }
 
 .dashboard-select-group select {
-    padding: 12px 14px;
     width: 100%;
-    border-radius: 10px;
-    border: 2px solid #e2e8f0;
-    font-size: 15px;
-    font-family: 'Rubik', sans-serif;
+    padding: 14px 18px;
+    font-family: var(--font-family);
+    font-size: 16px;
+    color: var(--text-primary);
+    background-color: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
     outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
     direction: rtl;
+    appearance: none;
 }
 
 .dashboard-select-group select:focus {
-    border-color: #4361ee;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
 .modal-description {
     font-size: 14px;
-    color: #718096;
-    margin-bottom: 16px;
-}
-
-.btn-logout {
-    background-color: #e53e3e;
-}
-
-.btn-logout:hover:not(:disabled) {
-    background-color: #c53030;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
 @media (max-width: 600px) {
     .dashboard-page {
-        padding: 30px 16px;
+        padding: 24px 16px;
     }
 
-    .dashboard-page h1 {
-        font-size: 24px;
+    .dashboard-title {
+        font-size: 26px;
     }
 
-    .dashboard-buttons {
+    .dashboard-cards {
         flex-direction: column;
         align-items: center;
-        gap: 12px;
-        margin-top: 30px;
     }
 
-    .dashboard-buttons .btn {
-        width: 100%;
-        max-width: 280px;
+    .dashboard-card {
+        max-width: 100%;
     }
 }

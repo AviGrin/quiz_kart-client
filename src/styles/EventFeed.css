@@ -1,27 +1,27 @@
 .event-feed {
-    width: 280px;
-    background-color: #1a202c;
-    border-radius: 12px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
     padding: 16px;
     display: flex;
     flex-direction: column;
-    max-height: 100%;
+    min-height: 0;
     overflow: hidden;
 }
 
 .event-feed-title {
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     margin-bottom: 12px;
     text-align: center;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .event-feed-empty {
     font-size: 14px;
-    color: #718096;
+    color: var(--text-muted);
     text-align: center;
     padding: 20px 0;
 }
@@ -33,7 +33,7 @@
     flex-direction: column;
     gap: 8px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
 }
 
 .event-feed-list::-webkit-scrollbar {
@@ -45,7 +45,7 @@
 }
 
 .event-feed-list::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(139, 92, 246, 0.3);
     border-radius: 2px;
 }
 
@@ -54,9 +54,9 @@
     align-items: center;
     gap: 8px;
     padding: 10px 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     font-size: 13px;
-    color: #e2e8f0;
+    color: var(--text-secondary);
     transition: opacity 0.3s;
 }
 
@@ -85,33 +85,32 @@
 }
 
 .event-overtake {
-    background-color: rgba(67, 97, 238, 0.2);
-    border-right: 3px solid #4361ee;
+    background-color: rgba(59, 130, 246, 0.1);
+    border-right: 3px solid var(--accent-blue);
 }
 
 .event-streak {
-    background-color: rgba(237, 137, 54, 0.2);
-    border-right: 3px solid #ed8936;
+    background-color: rgba(245, 158, 11, 0.1);
+    border-right: 3px solid var(--accent-yellow);
 }
 
 .event-luck {
-    background-color: rgba(124, 58, 237, 0.2);
-    border-right: 3px solid #7c3aed;
+    background-color: rgba(139, 92, 246, 0.1);
+    border-right: 3px solid var(--accent-purple);
 }
 
 .event-autostrada {
-    background-color: rgba(229, 62, 62, 0.2);
-    border-right: 3px solid #e53e3e;
+    background-color: rgba(239, 68, 68, 0.1);
+    border-right: 3px solid var(--accent-red);
 }
 
 .event-dirtroad {
-    background-color: rgba(56, 161, 105, 0.2);
-    border-right: 3px solid #38a169;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-right: 3px solid var(--accent-green);
 }
 
 @media (max-width: 900px) {
     .event-feed {
-        width: 100%;
-        max-height: 200px;
+        max-height: 220px;
     }
 }

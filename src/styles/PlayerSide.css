@@ -1,53 +1,47 @@
 .player-side {
+    padding: 24px 20px;
+    max-width: 700px;
+    margin: 0 auto;
     text-align: center;
-    padding: 20px;
-    min-height: 100vh;
 }
 
 .player-side h2 {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 6px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
 }
 
 .player-side h3 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
-    color: #4a5568;
-    margin-bottom: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
 }
 
 .player-waiting {
-    margin-top: 40px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 48px 24px;
+    margin-top: 20px;
 }
 
 .player-waiting h4 {
-    color: #a0aec0;
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
 }
 
 .player-waiting p {
-    color: #718096;
-    font-size: 16px;
+    font-size: 15px;
+    color: var(--text-secondary);
 }
 
 .player-progress-section {
-    max-width: 500px;
-    margin: 0 auto 20px;
-}
-
-@media (max-width: 600px) {
-    .player-side {
-        padding: 12px;
-    }
-
-    .player-side h2 {
-        font-size: 22px;
-    }
-
-    .player-side h3 {
-        font-size: 15px;
-    }
+    margin-bottom: 20px;
 }

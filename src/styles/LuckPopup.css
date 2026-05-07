@@ -21,21 +21,22 @@
 }
 
 .luck-popup {
-    padding: 32px 48px;
-    border-radius: 20px;
+    padding: 36px 52px;
+    border-radius: var(--radius-xl);
     text-align: center;
     animation: luckAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
 .luck-popup.luck-good {
-    background: linear-gradient(135deg, #f0fff4, #c6f6d5);
-    border: 3px solid #38a169;
+    background: linear-gradient(145deg, #0f2922, #0b1a2e);
+    border: 2px solid var(--accent-green);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-green);
 }
 
 .luck-popup.luck-bad {
-    background: linear-gradient(135deg, #fff5f5, #fed7d7);
-    border: 3px solid #e53e3e;
+    background: linear-gradient(145deg, #2a0f0f, #1a0b2e);
+    border: 2px solid var(--accent-red);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-red);
 }
 
 @keyframes luckAppear {
@@ -58,13 +59,13 @@
 .luck-popup-title {
     font-size: 26px;
     font-weight: 700;
-    color: #1a202c;
+    color: var(--text-primary);
     margin-bottom: 6px;
 }
 
 .luck-popup-desc {
     font-size: 16px;
-    color: #4a5568;
+    color: var(--text-secondary);
     font-weight: 500;
 }
 

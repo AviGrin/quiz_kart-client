@@ -6,15 +6,16 @@
 }
 
 .winner-banner {
-    background: linear-gradient(135deg, #fefcbf, #fef3c7);
-    border: 2px solid #ecc94b;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
+    background: linear-gradient(145deg, #2a1f00, #1a1745);
+    border: 2px solid var(--accent-yellow);
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
 }
 
 .winner-trophy {
-    font-size: 48px;
+    font-size: 52px;
     display: block;
     margin-bottom: 8px;
 }
@@ -22,13 +23,19 @@
 .winner-text {
     font-size: 26px;
     font-weight: 700;
-    color: #744210;
+    background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .results-title {
     font-size: 28px;
     font-weight: 700;
-    color: #1a202c;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 24px;
 }
 
@@ -39,31 +46,30 @@
 
 .results-item {
     margin: 8px 0;
-    border-radius: 12px;
-    background-color: #fff;
-    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
     cursor: pointer;
-    transition: box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     overflow: hidden;
 }
 
 .results-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-glow);
 }
 
 .results-item:nth-child(1) {
-    background: linear-gradient(135deg, #fffff0, #fefcbf);
-    border-color: #ecc94b;
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
 }
 
 .results-item:nth-child(2) {
-    background: linear-gradient(135deg, #f7fafc, #edf2f7);
-    border-color: #a0aec0;
+    border-color: rgba(148, 163, 184, 0.3);
 }
 
 .results-item:nth-child(3) {
-    background: linear-gradient(135deg, #fffaf0, #feebc8);
-    border-color: #dd6b20;
+    border-color: rgba(249, 115, 22, 0.3);
 }
 
 .results-item-main {
@@ -87,19 +93,19 @@
 .results-player-name {
     font-size: 20px;
     font-weight: 600;
-    color: #1a202c;
+    color: var(--text-primary);
 }
 
 .results-player-summary {
     font-size: 13px;
-    color: #718096;
+    color: var(--text-secondary);
     margin-top: 4px;
 }
 
 .results-score {
     font-size: 24px;
     font-weight: 700;
-    color: #4361ee;
+    color: var(--accent-purple);
 }
 
 .results-expanded {
@@ -129,8 +135,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.04);
-    border-radius: 10px;
+    background-color: rgba(139, 92, 246, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     padding: 10px 14px;
     min-width: 90px;
 }
@@ -138,18 +145,18 @@
 .stat-value {
     font-size: 18px;
     font-weight: 700;
-    color: #2d3748;
+    color: var(--text-primary);
 }
 
 .stat-label {
     font-size: 11px;
-    color: #718096;
+    color: var(--text-muted);
     margin-top: 2px;
 }
 
 .results-tap-hint {
     font-size: 13px;
-    color: #a0aec0;
+    color: var(--text-muted);
     margin-top: 16px;
 }
 
@@ -163,7 +170,7 @@
     }
 
     .winner-trophy {
-        font-size: 36px;
+        font-size: 40px;
     }
 
     .results-title {
@@ -185,10 +192,6 @@
 
     .results-score {
         font-size: 20px;
-    }
-
-    .results-player-info {
-        margin: 0 10px;
     }
 
     .stat-box {

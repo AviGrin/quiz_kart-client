@@ -1,76 +1,77 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { HOST, getErrorMessage } from '../Constants.js';
+import { HOST, getErrorMessage } from "../Constants";
+import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import Card from "../components/Card";
 import '../styles/LoginPage.css';
 
 function LoginPage() {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = Cookies.get("token");
-        if (token != null) {
-            navigate("/dashboard");
-        }
-    }, [navigate]);
+    const [error, setError] = useState("");
 
     const handleLogin = () => {
-        setErrorMessage("");
-        axios.post(HOST + "login", { username, password })
-            .then(response => {
-                if (response.data.success) {
-                    Cookies.set('token', response.data.token);
-                    navigate("/dashboard");
-                } else {
-                    setErrorMessage(getErrorMessage(response.data.errorCode));
-                }
-            }).catch(() => {
-            setErrorMessage("שגיאת תקשורת, נסה שוב מאוחר יותר");
+        setError("");
+        axios.post(HOST + "login", {
+            username: username,
+            password: password
+        }).then(response => {
+            if (response.data.success) {
+                Cookies.set("token", response.data.token);
+                navigate("/dashboard");
+            } else {
+                setError(getErrorMessage(response.data.errorCode));
+            }
+        }).catch(() => {
+            setError("שגיאת תקשורת, נסה שוב מאוחר יותר");
         });
     };
 
     return (
         <div className="login-page">
-            <Card title="התחברות למערכת">
-                {errorMessage && (
-                    <div className="login-error">{errorMessage}</div>
-                )}
+            <motion.div
+                className="login-card"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+                <span className="login-logo">🏎️</span>
+                <h1 className="login-title">מרוץ הלמידה</h1>
+                <p className="login-subtitle">התחבר כדי להתחיל לשחק!</p>
 
-                <Input
-                    label="שם משתמש"
-                    placeholder="הכנס את שם המשתמש שלך"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                <div className="login-form">
+                    <Input
+                        label="שם משתמש"
+                        placeholder="הכנס שם משתמש"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                        label="סיסמה"
+                        placeholder="הכנס סיסמה"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
 
-                <Input
-                    label="סיסמה"
-                    type="password"
-                    placeholder="הכנס סיסמה (6 תווים)"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                {error && <p className="login-error">{error}</p>}
 
                 <div className="login-actions">
                     <Button
-                        text="היכנס"
+                        text="התחבר"
                         onClick={handleLogin}
-                        disabled={password.length !== 6 || username.length === 0}
+                        disabled={!username.trim() || password.length !== 6}
                     />
-
-                    <div className="login-link-area">
-                        <span>אין לך חשבון? </span>
-                        <button onClick={() => navigate("/signup")}>הירשם כאן</button>
-                    </div>
+                    <p className="login-link">
+                        אין לך חשבון? <Link to="/signup">הירשם עכשיו</Link>
+                    </p>
                 </div>
-            </Card>
+            </motion.div>
         </div>
     );
 }
