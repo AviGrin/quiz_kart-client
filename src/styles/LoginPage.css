@@ -6,33 +6,87 @@
     padding: 20px;
 }
 
-.login-error {
-    background-color: #fed7d7;
-    color: #c53030;
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-bottom: 16px;
+.login-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+}
+
+.login-logo {
+    font-size: 48px;
+    margin-bottom: -8px;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-subtitle {
     font-size: 14px;
-    text-align: center;
+    color: var(--text-secondary);
+    margin-top: -16px;
+}
+
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .login-actions {
-    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
 }
 
-.login-link-area {
-    margin-top: 16px;
+.login-actions .game-btn {
+    width: 100%;
+}
+
+.login-link {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.login-link a {
+    color: var(--accent-purple);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.login-link a:hover {
+    color: var(--accent-cyan);
+}
+
+.login-error {
+    font-size: 14px;
+    color: var(--accent-red);
     text-align: center;
-    font-size: 14px;
-    color: #718096;
 }
 
-.login-link-area button {
-    background: none;
-    border: none;
-    color: #4361ee;
-    cursor: pointer;
-    text-decoration: underline;
-    font-family: 'Rubik', sans-serif;
-    font-size: 14px;
+@media (max-width: 500px) {
+    .login-card {
+        padding: 36px 24px;
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
 }

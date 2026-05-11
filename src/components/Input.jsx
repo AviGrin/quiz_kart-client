@@ -1,18 +1,19 @@
 import React from 'react';
 import '../styles/Input.css';
 
-const Input = ({ label, type = 'text', value, onChange, placeholder }) => {
+function Input({ label, placeholder, value, onChange, type }) {
     return (
-        <div className="input-group">
-            {label && <label>{label}</label>}
+        <div className="game-input-group">
+            {label && <label className="game-input-label">{label}</label>}
             <input
-                type={type}
+                className="game-input"
+                type={type || 'text'}
+                placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                placeholder={placeholder}
             />
         </div>
     );
-};
+}
 
 export default Input;

@@ -1,0 +1,149 @@
+.junction-choice {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.junction-title {
+    font-size: 30px;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+}
+
+.junction-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+}
+
+.junction-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.junction-option {
+    flex: 1;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px;
+    background: var(--gradient-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.junction-option:hover:not(:disabled) {
+    transform: translateY(-4px);
+}
+
+.junction-option:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.junction-option:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.junction-option.autostrada:hover:not(:disabled) {
+    border-color: var(--accent-red);
+    box-shadow: var(--shadow-glow-red);
+}
+
+.junction-option.dirtroad:hover:not(:disabled) {
+    border-color: var(--accent-green);
+    box-shadow: var(--shadow-glow-green);
+}
+
+.junction-icon {
+    font-size: 48px;
+}
+
+.junction-option-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.junction-option-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.junction-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.junction-reward {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-green);
+}
+
+.junction-risk {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-red);
+}
+
+.junction-safe {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+
+.junction-tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: var(--radius-full);
+    margin-top: 8px;
+    color: #fff;
+}
+
+.tag-risk {
+    background: var(--gradient-danger);
+}
+
+.tag-safe {
+    background: var(--gradient-success);
+}
+
+@media (max-width: 600px) {
+    .junction-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .junction-option {
+        max-width: 100%;
+        width: 100%;
+        padding: 20px 16px;
+    }
+
+    .junction-title {
+        font-size: 24px;
+    }
+
+    .junction-icon {
+        font-size: 36px;
+    }
+
+    .junction-option-title {
+        font-size: 18px;
+    }
+}

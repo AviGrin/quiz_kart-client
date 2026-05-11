@@ -1,0 +1,116 @@
+.event-feed {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.event-feed-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.event-feed-empty {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.event-feed-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+}
+
+.event-feed-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.event-feed-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.event-feed-list::-webkit-scrollbar-thumb {
+    background-color: rgba(139, 92, 246, 0.3);
+    border-radius: 2px;
+}
+
+.event-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: opacity 0.3s;
+}
+
+.event-item.event-new {
+    animation: eventSlideIn 0.3s ease-out;
+}
+
+@keyframes eventSlideIn {
+    0% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.event-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.event-text {
+    line-height: 1.4;
+}
+
+.event-overtake {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-right: 3px solid var(--accent-blue);
+}
+
+.event-streak {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-right: 3px solid var(--accent-yellow);
+}
+
+.event-luck {
+    background-color: rgba(139, 92, 246, 0.1);
+    border-right: 3px solid var(--accent-purple);
+}
+
+.event-autostrada {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-right: 3px solid var(--accent-red);
+}
+
+.event-dirtroad {
+    background-color: rgba(16, 185, 129, 0.1);
+    border-right: 3px solid var(--accent-green);
+}
+
+@media (max-width: 900px) {
+    .event-feed {
+        max-height: 220px;
+    }
+}

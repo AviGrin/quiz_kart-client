@@ -1,27 +1,36 @@
-.input-group {
-    margin-bottom: 16px;
+.game-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    text-align: right;
 }
 
-.input-group label {
-    display: block;
+.game-input-label {
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 6px;
-    color: #4a5568;
+    color: var(--text-secondary);
 }
 
-.input-group input {
+.game-input {
     width: 100%;
-    padding: 12px 14px;
-    font-size: 15px;
-    font-family: 'Rubik', sans-serif;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: var(--font-family);
+    font-size: 16px;
+    color: var(--text-primary);
+    background-color: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.3s, box-shadow 0.3s;
     direction: rtl;
 }
 
-.input-group input:focus {
-    border-color: #4361ee;
+.game-input::placeholder {
+    color: var(--text-muted);
+}
+
+.game-input:focus {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }

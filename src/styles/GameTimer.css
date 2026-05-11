@@ -1,16 +1,18 @@
 .game-timer {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background-color: #edf2f7;
-    padding: 8px 16px;
-    border-radius: 20px;
+    gap: 8px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
     font-size: 18px;
     font-weight: 600;
-    color: #2d3748;
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
 .timer-icon {
     font-size: 20px;
+    color: var(--accent-cyan);
 }

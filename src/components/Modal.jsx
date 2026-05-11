@@ -1,35 +1,41 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoClose } from 'react-icons/io5';
 import '../styles/Modal.css';
 
-const Modal = ({ isOpen, onClose, children, title }) => {
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [isOpen]);
-
-    if (!isOpen) return null;
-
+function Modal({ isOpen, onClose, title, children }) {
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                {title && (
-                    <div className="modal-header">
-                        <h3>{title}</h3>
-                        <button className="modal-close-btn" onClick={onClose}>&times;</button>
-                    </div>
-                )}
-                <div className="modal-body">
-                    {children}
-                </div>
-            </div>
-        </div>
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    className="modal-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={onClose}
+                >
+                    <motion.div
+                        className="modal-content"
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="modal-header">
+                            <h2 className="modal-title">{title}</h2>
+                            <button className="modal-close" onClick={onClose}>
+                                <IoClose />
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            {children}
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
-};
+}
 
 export default Modal;
