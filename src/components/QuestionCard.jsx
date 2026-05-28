@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/QuestionCard.css';
 
 function QuestionCard({ question, feedback, loading, onAnswerClick, timeLeft, timeLimit,
-                          questionMode, dirtRoadRemaining, canSwap, onSwap }) {
+                          questionMode, dirtRoadRemaining }) {
     if (!question) {
         return <p className="question-loading">טוען שאלה...</p>;
     }
@@ -75,10 +75,10 @@ function QuestionCard({ question, feedback, loading, onAnswerClick, timeLeft, ti
 
             <div className="question-feedback">
                 {feedback === 'correct' && <span className="feedback-correct">נכון מאוד!</span>}
-                {feedback === 'wrong' && <span className="feedback-wrong">לא נכון, נסה שוב!</span>}
+                {feedback === 'wrong' && <span className="feedback-wrong">לא נכון!</span>}
                 {feedback === 'timeout' && <span className="feedback-timeout">נגמר הזמן!</span>}
-                {feedback === 'autostrada-success' && <span className="feedback-autostrada-success">מדהים! +1000 נקודות! 🏎️</span>}
-                {feedback === 'autostrada-fail' && <span className="feedback-autostrada-fail">לא הצלחת... -200 נקודות</span>}
+                {feedback === 'autostrada-success' && <span className="feedback-autostrada-success">מדהים! +200 נקודות! 🏎️</span>}
+                {feedback === 'autostrada-fail' && <span className="feedback-autostrada-fail">לא הצלחת... -50 נקודות</span>}
             </div>
 
             <div className="question-options">
@@ -93,16 +93,6 @@ function QuestionCard({ question, feedback, loading, onAnswerClick, timeLeft, ti
                     </button>
                 ))}
             </div>
-
-            {canSwap && !feedback && (
-                <button
-                    className="swap-btn"
-                    onClick={onSwap}
-                    disabled={loading}
-                >
-                    🔄 החלף שאלה
-                </button>
-            )}
         </div>
     );
 }

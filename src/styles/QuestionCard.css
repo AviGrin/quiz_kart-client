@@ -210,32 +210,6 @@
     background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
 }
 
-.swap-btn {
-    display: block;
-    margin: 16px auto 0;
-    padding: 10px 24px;
-    font-size: 14px;
-    font-family: var(--font-family);
-    font-weight: 600;
-    cursor: pointer;
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-full);
-    transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
-}
-
-.swap-btn:hover:not(:disabled) {
-    border-color: var(--accent-purple);
-    color: var(--accent-purple);
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
-}
-
-.swap-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
 .question-loading {
     text-align: center;
     font-size: 18px;

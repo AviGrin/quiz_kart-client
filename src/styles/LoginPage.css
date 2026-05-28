@@ -6,6 +6,15 @@
     padding: 20px;
 }
 
+.card-enter {
+    animation: cardEnter 0.5s ease-out;
+}
+
+@keyframes cardEnter {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .login-card {
     background: var(--gradient-card);
     border: 1px solid var(--border-color);

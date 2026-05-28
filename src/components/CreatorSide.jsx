@@ -3,8 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { HOST, getErrorMessage } from '../Constants';
-import { motion } from 'framer-motion';
-import { IoTimer, IoPeople, IoTrophy } from 'react-icons/io5';
+import { IoPeople } from 'react-icons/io5';
 import WaitingLobby from "./WaitingLobby";
 import GameTimer from "./GameTimer";
 import ResultsScreen from "./ResultsScreen";
@@ -137,11 +136,7 @@ function CreatorSide({ gameData }) {
     if (status === 1) {
         return (
             <div className="creator-side running-game">
-                <motion.div
-                    className="creator-header"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                >
+                <div className="creator-header card-enter">
                     <div className="creator-header-right">
                         <h2 className="creator-title">{gameData?.gameName || 'המירוץ הגדול'}</h2>
                         <div className="creator-header-badges">
@@ -156,7 +151,7 @@ function CreatorSide({ gameData }) {
                     <div className="creator-header-left">
                         <Button text="סיים משחק" onClick={handleEndGame} className="btn-end-game" />
                     </div>
-                </motion.div>
+                </div>
 
                 <div className="creator-track-section">
                     <RacingTrack

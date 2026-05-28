@@ -8,12 +8,25 @@ function RacingTrack({ players, trackLength }) {
     if (!trackLength || !players || players.length === 0) return null;
 
     const sortedPlayers = [...players].sort((a, b) => a.id - b.id);
-
-    const LANE_HEIGHT = 120;
-    const CURB_HEIGHT = 8;
     const numPlayers = sortedPlayers.length;
 
-    const roadHeight = numPlayers * LANE_HEIGHT;
+    let laneHeight, carSize, bubbleClass;
+    if (numPlayers <= 3) {
+        laneHeight = 120;
+        carSize = 80;
+        bubbleClass = '';
+    } else if (numPlayers <= 5) {
+        laneHeight = 90;
+        carSize = 70;
+        bubbleClass = 'bubble-medium';
+    } else {
+        laneHeight = 70;
+        carSize = 55;
+        bubbleClass = 'bubble-small';
+    }
+
+    const CURB_HEIGHT = 8;
+    const roadHeight = numPlayers * laneHeight;
     const totalHeight = roadHeight + (CURB_HEIGHT * 2);
 
     return (
@@ -29,7 +42,7 @@ function RacingTrack({ players, trackLength }) {
                         <div
                             key={`line-${i}`}
                             className="road-dashed-line"
-                            style={{ top: `${CURB_HEIGHT + (i + 1) * LANE_HEIGHT}px` }}
+                            style={{ top: `${CURB_HEIGHT + (i + 1) * laneHeight}px` }}
                         />
                     ))}
 
@@ -40,7 +53,7 @@ function RacingTrack({ players, trackLength }) {
                         const color = PLAYER_COLORS[index % PLAYER_COLORS.length];
 
                         const rightPosition = `calc(${percent}% - (${percent}% * ${finishLineBuffer / 1000}) + ${startOffset}px)`;
-                        const topPosition = CURB_HEIGHT + (index + 0.5) * LANE_HEIGHT;
+                        const topPosition = CURB_HEIGHT + (index + 0.5) * laneHeight;
 
                         return (
                             <div
@@ -53,7 +66,7 @@ function RacingTrack({ players, trackLength }) {
                                 }}
                             >
                                 <div
-                                    className="car-info-bubble"
+                                    className={`car-info-bubble ${bubbleClass}`}
                                     style={{ borderColor: color, boxShadow: `0 0 12px ${color}40` }}
                                 >
                                     <div className="car-bubble-rank" style={{ backgroundColor: color }}>
@@ -64,7 +77,12 @@ function RacingTrack({ players, trackLength }) {
                                         <span className="car-player-score" style={{ color }}>{player.score} נק׳</span>
                                     </div>
                                 </div>
-                                <img src={carImage} alt={player.fullName} className="race-car-image" />
+                                <img
+                                    src={carImage}
+                                    alt={player.fullName}
+                                    className="race-car-image"
+                                    style={{ width: `${carSize}px` }}
+                                />
                             </div>
                         );
                     })}

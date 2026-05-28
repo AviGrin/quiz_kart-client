@@ -30,6 +30,15 @@
     box-shadow: var(--shadow-md);
 }
 
+.lobby-code-pop {
+    animation: codePop 0.4s ease-out 0.2s both;
+}
+
+@keyframes codePop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 .lobby-code-label {
     font-size: 14px;
     color: var(--text-secondary);
@@ -44,7 +53,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: none;
 }
 
 .lobby-players-box {
@@ -71,18 +79,6 @@
     padding: 20px 0;
 }
 
-.lobby-waiting-dots::after {
-    content: '';
-    animation: dots 1.5s steps(4, end) infinite;
-}
-
-@keyframes dots {
-    0% { content: ''; }
-    25% { content: '.'; }
-    50% { content: '..'; }
-    75% { content: '...'; }
-}
-
 .lobby-players-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -97,6 +93,15 @@
     background-color: rgba(139, 92, 246, 0.1);
     border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: var(--radius-md);
+}
+
+.lobby-chip-enter {
+    animation: chipEnter 0.3s ease-out both;
+}
+
+@keyframes chipEnter {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .lobby-player-avatar {
@@ -132,6 +137,7 @@
     font-weight: 700;
     color: #fff;
     box-shadow: var(--shadow-glow-green);
+    animation: codePop 0.4s ease-out;
 }
 
 .lobby-start-area {

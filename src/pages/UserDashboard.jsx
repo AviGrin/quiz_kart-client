@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { motion } from "framer-motion";
 import { HOST, getErrorMessage } from "../Constants";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
+import PlayerStats from "../components/PlayerStats";
 import '../styles/UserDashboard.css';
 
 function UserDashboard() {
@@ -14,6 +14,7 @@ function UserDashboard() {
     const [newGameName, setNewGameName] = useState("");
     const [newGameType, setNewGameType] = useState(0);
     const [gameCode, setGameCode] = useState("");
+    const [stats, setStats] = useState(null);
 
     const [isModal1Open, setIsModal1Open] = useState(false);
     const [isModal2Open, setIsModal2Open] = useState(false);
@@ -22,7 +23,16 @@ function UserDashboard() {
         const token = Cookies.get("token");
         if (!token) {
             navigate("/");
+            return;
         }
+
+        axios.get(HOST + "get-player-stats", { params: { token } })
+            .then(res => {
+                if (res.data.success) {
+                    setStats(res.data.stats);
+                }
+            })
+            .catch(() => {});
     }, [navigate]);
 
     const handleNewGame = () => {
@@ -67,46 +77,33 @@ function UserDashboard() {
 
     return (
         <div className="dashboard-page">
-            <motion.div
-                className="dashboard-header"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
+            <div className="dashboard-header card-enter">
                 <span className="dashboard-header-icon">🏎️</span>
                 <h1 className="dashboard-title">מרוץ הלמידה</h1>
                 <p className="dashboard-subtitle">בחר מה תרצה לעשות</p>
-            </motion.div>
+            </div>
 
             <div className="dashboard-cards">
-                <motion.div
-                    className="dashboard-card"
+                <div
+                    className="dashboard-card dash-card-enter-1"
                     onClick={() => setIsModal1Open(true)}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.98 }}
                 >
                     <span className="dashboard-card-icon">🏁</span>
                     <h3 className="dashboard-card-title">צור משחק חדש</h3>
                     <p className="dashboard-card-desc">פתח חדר מרוץ חדש והזמן שחקנים להצטרף</p>
-                </motion.div>
+                </div>
 
-                <motion.div
-                    className="dashboard-card"
+                <div
+                    className="dashboard-card dash-card-enter-2"
                     onClick={() => setIsModal2Open(true)}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.98 }}
                 >
                     <span className="dashboard-card-icon">🎮</span>
                     <h3 className="dashboard-card-title">הצטרף למשחק</h3>
                     <p className="dashboard-card-desc">הכנס קוד משחק והתחל להתחרות</p>
-                </motion.div>
+                </div>
             </div>
+
+            <PlayerStats stats={stats} />
 
             <div className="dashboard-logout">
                 <Button text="התנתק" onClick={handleLogout} className="btn-logout" />
