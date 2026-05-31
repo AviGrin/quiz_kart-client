@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import carImage from '../assets/images/img.png';
 import '../styles/RacingTrack.css';
 
-const PLAYER_COLORS = ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4', '#f97316'];
+const PLAYER_COLORS = ['#a855f7', '#3b82f6', '#22c55e', '#eab308', '#ef4444', '#ec4899', '#06b6d4', '#f97316'];
 
 function RacingTrack({ players, trackLength }) {
+    const [turboCars, setTurboCars] = useState({});
+    const prevScores = useRef({});
+
+    useEffect(() => {
+        if (!players) return;
+
+        let newTurbos = { ...turboCars };
+        let changed = false;
+
+        players.forEach(p => {
+            const oldScore = prevScores.current[p.id] || 0;
+            if (p.score - oldScore >= 40) {
+                newTurbos[p.id] = true;
+                changed = true;
+
+                setTimeout(() => {
+                    setTurboCars(current => ({ ...current, [p.id]: false }));
+                }, 2000);
+            }
+            prevScores.current[p.id] = p.score;
+        });
+
+        if (changed) {
+            setTimeout(() => {
+                setTurboCars(newTurbos);
+            }, 0);
+        }
+    }, [players]);
+
     if (!trackLength || !players || players.length === 0) return null;
 
     const sortedPlayers = [...players].sort((a, b) => a.id - b.id);
@@ -13,15 +42,15 @@ function RacingTrack({ players, trackLength }) {
     let laneHeight, carSize, bubbleClass;
     if (numPlayers <= 3) {
         laneHeight = 120;
-        carSize = 80;
+        carSize = 90;
         bubbleClass = '';
     } else if (numPlayers <= 5) {
         laneHeight = 90;
-        carSize = 70;
+        carSize = 75;
         bubbleClass = 'bubble-medium';
     } else {
         laneHeight = 70;
-        carSize = 55;
+        carSize = 60;
         bubbleClass = 'bubble-small';
     }
 
@@ -32,6 +61,7 @@ function RacingTrack({ players, trackLength }) {
     return (
         <div className="racing-track-wrapper">
             <div className="racing-track-container" style={{ height: `${totalHeight}px` }}>
+
                 <div className="curb top" />
                 <div className="curb bottom" />
 
@@ -54,6 +84,7 @@ function RacingTrack({ players, trackLength }) {
 
                         const rightPosition = `calc(${percent}% - (${percent}% * ${finishLineBuffer / 1000}) + ${startOffset}px)`;
                         const topPosition = CURB_HEIGHT + (index + 0.5) * laneHeight;
+                        const isTurbo = turboCars[player.id];
 
                         return (
                             <div
@@ -67,22 +98,32 @@ function RacingTrack({ players, trackLength }) {
                             >
                                 <div
                                     className={`car-info-bubble ${bubbleClass}`}
-                                    style={{ borderColor: color, boxShadow: `0 0 12px ${color}40` }}
+                                    style={{
+                                        backgroundColor: '#fff',
+                                        borderBottom: `4px solid ${color}`,
+                                        borderTop: `2px solid ${color}`,
+                                        borderLeft: `2px solid ${color}`,
+                                        borderRight: `2px solid ${color}`
+                                    }}
                                 >
                                     <div className="car-bubble-rank" style={{ backgroundColor: color }}>
                                         {index + 1}
                                     </div>
                                     <div className="car-bubble-details">
-                                        <span className="car-player-name">{player.fullName}</span>
-                                        <span className="car-player-score" style={{ color }}>{player.score} נק׳</span>
+                                        <span className="car-player-name" style={{ color: '#1e293b' }}>{player.fullName}</span>
+                                        <span className="car-player-score" style={{ color }}>{player.score}</span>
                                     </div>
                                 </div>
-                                <img
-                                    src={carImage}
-                                    alt={player.fullName}
-                                    className="race-car-image"
-                                    style={{ width: `${carSize}px` }}
-                                />
+
+                                <div className="car-body-wrapper">
+                                    {isTurbo && <div className="jet-flame"></div>}
+                                    <img
+                                        src={carImage}
+                                        alt={player.fullName}
+                                        className={`race-car-image ${isTurbo ? 'car-turbo-shake' : ''}`}
+                                        style={{ width: `${carSize}px` }}
+                                    />
+                                </div>
                             </div>
                         );
                     })}

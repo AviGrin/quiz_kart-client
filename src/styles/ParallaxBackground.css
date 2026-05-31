@@ -1,0 +1,58 @@
+.parallax-bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 100%);
+}
+
+.parallax-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-position: bottom left;
+}
+
+.sun {
+    position: absolute;
+    top: 10%;
+    right: 15%;
+    width: 120px;
+    height: 120px;
+    background: #fde047;
+    border-radius: 50%;
+    box-shadow: 0 0 60px #fef08a;
+    opacity: 0.8;
+}
+
+.layer-mountains {
+    background-image: url("data:image/svg+xml,%3Csvg width='800' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,300 L0,150 L100,50 L250,200 L400,20 L550,180 L700,80 L800,200 L800,300 Z' fill='%237dd3fc' opacity='0.6'/%3E%3C/svg%3E");
+    background-size: 800px 300px;
+    animation: scrollBg 80s linear infinite;
+    z-index: 1;
+}
+
+.layer-hills {
+    background-image: url("data:image/svg+xml,%3Csvg width='1200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,200 L0,100 Q150,0 300,100 T600,100 T900,100 T1200,100 L1200,200 Z' fill='%2334d399' opacity='0.8'/%3E%3C/svg%3E");
+    background-size: 1200px 200px;
+    animation: scrollBg 40s linear infinite;
+    z-index: 2;
+}
+
+.layer-foreground {
+    background-image: url("data:image/svg+xml,%3Csvg width='600' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,100 L0,40 Q75,10 150,50 T300,40 T450,60 T600,30 L600,100 Z' fill='%2310b981'/%3E%3C/svg%3E");
+    background-size: 600px 100px;
+    animation: scrollBg 15s linear infinite;
+    z-index: 3;
+}
+
+@keyframes scrollBg {
+    from { background-position: 0 bottom; }
+    to { background-position: -2400px bottom; }
+}

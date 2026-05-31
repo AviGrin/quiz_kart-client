@@ -9,7 +9,11 @@ import ProgressBar from "./ProgressBar";
 import ResultsScreen from "./ResultsScreen";
 import JunctionChoice from "./JunctionChoice";
 import LuckPopup from "./LuckPopup";
+import Button from "./Button";
 import '../styles/PlayerSide.css';
+import SkidMarkEffect from "./SkidMarkEffect";
+import StreakEffect from "./StreakEffect";
+import ParallaxBackground from "./ParallaxBackground";
 
 function PlayerSide({ gameData }) {
     const { id } = useParams();
@@ -33,7 +37,6 @@ function PlayerSide({ gameData }) {
 
     const [questionMode, setQuestionMode] = useState("normal");
     const [dirtRoadRemaining, setDirtRoadRemaining] = useState(0);
-
     const [luckEvent, setLuckEvent] = useState(null);
 
     const eventSourceRef = useRef(null);
@@ -56,6 +59,27 @@ function PlayerSide({ gameData }) {
         setLoading(val);
     };
 
+    const handleLeaveGame = () => {
+        const token = Cookies.get("token");
+        axios.post(`${HOST}leave-game`, { token, gameId: parseInt(id) })
+            .then(() => navigate('/dashboard'))
+            .catch(() => navigate('/dashboard'));
+    };
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (status === 0) {
+                const token = Cookies.get("token");
+                const payload = JSON.stringify({ token, gameId: parseInt(id) });
+                const blob = new Blob([payload], { type: 'application/json' });
+                navigator.sendBeacon(`${HOST}leave-game`, blob);
+            }
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    }, [id, status]);
+
     const clearCountdown = () => {
         if (timerRef.current) {
             clearInterval(timerRef.current);
@@ -68,22 +92,24 @@ function PlayerSide({ gameData }) {
         setTimeLeft(seconds);
         setTimeLimit(seconds);
 
+        const targetEndTime = Date.now() + (seconds * 1000);
+
         timerRef.current = setInterval(() => {
-            setTimeLeft(prev => {
-                const next = prev - 1;
-                if (next <= 0) {
-                    clearInterval(timerRef.current);
-                    timerRef.current = null;
-                    setTimeout(() => {
-                        if (handleTimeUpRef.current) {
-                            handleTimeUpRef.current();
-                        }
-                    }, 0);
-                    return 0;
-                }
-                return next;
-            });
-        }, 1000);
+            const remaining = Math.ceil((targetEndTime - Date.now()) / 1000);
+
+            if (remaining <= 0) {
+                clearInterval(timerRef.current);
+                timerRef.current = null;
+                setTimeLeft(0);
+                setTimeout(() => {
+                    if (handleTimeUpRef.current) {
+                        handleTimeUpRef.current();
+                    }
+                }, 0);
+            } else {
+                setTimeLeft(remaining);
+            }
+        }, 500);
     }, []);
 
     const fetchQuestion = useCallback(() => {
@@ -170,6 +196,19 @@ function PlayerSide({ gameData }) {
             const sseUrl = `${HOST}game-subscribe?token=${token}&gameId=${id}`;
             const es = new EventSource(sseUrl);
 
+            es.onopen = () => {
+                axios.get(`${HOST}get-game`, { params: { token, id } })
+                    .then(res => {
+                        if (res.data.success) {
+                            const syncedGame = res.data.gameModel;
+                            setPlayersList(syncedGame.players);
+                            setStatus(syncedGame.status);
+                            if (syncedGame.startedAt) setStartedAt(syncedGame.startedAt);
+                        }
+                    })
+                    .catch(err => console.error(err));
+            };
+
             es.addEventListener("gameEvent", (event) => {
                 const data = JSON.parse(event.data);
 
@@ -195,6 +234,10 @@ function PlayerSide({ gameData }) {
                         clearCountdown();
                         if (data.rankings) setRankings(data.rankings);
                         if (data.winnerName) setWinnerName(data.winnerName);
+                        break;
+                    case "GAME_CANCELLED":
+                        alert("המשחק בוטל על ידי היוצר.");
+                        navigate("/dashboard");
                         break;
                     default:
                         break;
@@ -222,7 +265,7 @@ function PlayerSide({ gameData }) {
                 eventSourceRef.current = null;
             }
         };
-    }, [id, gameData, fetchQuestion]);
+    }, [id, gameData, fetchQuestion, navigate]);
 
     const handleAnswerClick = (answer) => {
         if (loading || submittingRef.current) return;
@@ -277,6 +320,7 @@ function PlayerSide({ gameData }) {
 
     return (
         <div className="player-side">
+            <ParallaxBackground />
             <h2>מרוץ הלמידה</h2>
             <h3>משחק: {gameData?.gameName} | מתחרה: {myName}</h3>
 
@@ -284,6 +328,13 @@ function PlayerSide({ gameData }) {
                 <div className="player-waiting">
                     <h4>ממתין לתחילת המשחק...</h4>
                     <p>שחקנים מחוברים: {playersList.length}</p>
+                    <div style={{ marginTop: '20px' }}>
+                        <Button
+                            text="עזוב חדר"
+                            onClick={handleLeaveGame}
+                            className="btn-logout"
+                        />
+                    </div>
                 </div>
             ) : (
                 <div>
@@ -296,17 +347,24 @@ function PlayerSide({ gameData }) {
                         <JunctionChoice onChoose={handleJunctionChoice} loading={loading} />
                     ) : (
                         <>
-                            <QuestionCard
-                                question={question}
-                                feedback={feedback}
-                                loading={loading}
-                                onAnswerClick={handleAnswerClick}
-                                timeLeft={timeLeft}
-                                timeLimit={timeLimit}
-                                questionMode={questionMode}
-                                dirtRoadRemaining={dirtRoadRemaining}
-                            />
+                            <div style={{ position: 'relative', marginTop: '40px' }}>
+                                <StreakEffect streak={myPlayer?.streak} />
+                                <QuestionCard
+                                    question={question}
+                                    feedback={feedback}
+                                    loading={loading}
+                                    onAnswerClick={handleAnswerClick}
+                                    timeLeft={timeLeft}
+                                    timeLimit={timeLimit}
+                                    questionMode={questionMode}
+                                    dirtRoadRemaining={dirtRoadRemaining}
+                                />
+                            </div>
                             <LuckPopup event={luckEvent} onClose={() => setLuckEvent(null)} />
+                            {/* אפקט פסי הבלימה */}
+                            {(feedback === 'correct' || feedback === 'autostrada-success') && (
+                                <SkidMarkEffect />
+                            )}
                         </>
                     )}
                 </div>

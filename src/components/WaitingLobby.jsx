@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './Button';
 import '../styles/WaitingLobby.css';
 
-function WaitingLobby({ gameName, gameCode, players, onStartGame, maxPlayers }) {
+function WaitingLobby({ gameName, gameCode, players, onStartGame, maxPlayers, onLeave }) {
     const isFull = maxPlayers && players.length >= maxPlayers;
 
     return (
@@ -54,6 +54,11 @@ function WaitingLobby({ gameName, gameCode, players, onStartGame, maxPlayers }) 
                     onClick={onStartGame}
                     disabled={players.length < 1}
                     className={isFull ? "btn-start-pulse" : ""}
+                />
+                <Button
+                    text="עזוב חדר"
+                    onClick={onLeave}
+                    className="btn-logout"
                 />
             </div>
         </div>
