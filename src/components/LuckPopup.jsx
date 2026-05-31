@@ -5,7 +5,7 @@ const LUCK_CONFIG = {
     TURBO: {
         icon: '🚀',
         title: 'טורבו!',
-        description: '+150 נקודות בונוס!',
+        description: '+30 נקודות בונוס!',
         className: 'luck-good'
     },
     DOUBLE_POINTS: {
@@ -23,7 +23,7 @@ const LUCK_CONFIG = {
     OIL_SLICK: {
         icon: '🛢️',
         title: 'כתם שמן!',
-        description: '-80 נקודות...',
+        description: '-15 נקודות...',
         className: 'luck-bad'
     }
 };
@@ -69,11 +69,13 @@ function LuckPopup({ event, onClose }) {
     };
 
     return (
-        <div className={`luck-popup-overlay ${visible ? 'luck-visible' : 'luck-hidden'}`}>
+        <div className={`luck-popup-container ${visible ? 'luck-visible' : 'luck-hidden'}`}>
             <div className={`luck-popup ${config.className}`}>
                 <span className="luck-popup-icon">{config.icon}</span>
-                <h3 className="luck-popup-title">{config.title}</h3>
-                <p className="luck-popup-desc">{config.description}</p>
+                <div className="luck-popup-text">
+                    <h3 className="luck-popup-title">{config.title}</h3>
+                    <p className="luck-popup-desc">{config.description}</p>
+                </div>
             </div>
         </div>
     );

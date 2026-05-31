@@ -39,7 +39,7 @@
 }
 
 .game-btn:active:not(:disabled) {
-    transform: translateY(0);
+    transform: scale(0.95);
 }
 
 .game-btn:disabled {

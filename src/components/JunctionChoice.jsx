@@ -17,8 +17,8 @@ function JunctionChoice({ onChoose, loading }) {
                     <span className="junction-option-title">אוטוסטרדה</span>
                     <span className="junction-option-desc">שאלה אחת קשה</span>
                     <div className="junction-details">
-                        <span className="junction-reward">הצלחה: +1000 נק׳</span>
-                        <span className="junction-risk">כישלון: -200 נק׳</span>
+                        <span className="junction-reward">הצלחה: +200 נק׳</span>
+                        <span className="junction-risk">כישלון: -50 נק׳</span>
                     </div>
                     <span className="junction-tag tag-risk">סיכון גבוה</span>
                 </button>
@@ -32,8 +32,8 @@ function JunctionChoice({ onChoose, loading }) {
                     <span className="junction-option-title">דרך עפר</span>
                     <span className="junction-option-desc">5 שאלות קלות</span>
                     <div className="junction-details">
-                        <span className="junction-reward">כל תשובה: +50 נק׳</span>
-                        <span className="junction-safe">סה״כ עד 250 נק׳</span>
+                        <span className="junction-reward">כל תשובה: +10 נק׳</span>
+                        <span className="junction-safe">סה״כ עד 50 נק׳</span>
                     </div>
                     <span className="junction-tag tag-safe">מסלול בטוח</span>
                 </button>

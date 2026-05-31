@@ -1,0 +1,190 @@
+.player-stats {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 16px;
+}
+
+.stats-fade-in {
+    animation: statsFadeIn 0.4s ease-out;
+}
+
+@keyframes statsFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stats-card-enter {
+    animation: statsCardEnter 0.3s ease-out both;
+}
+
+@keyframes statsCardEnter {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.player-stats-empty {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.stats-empty-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.stats-section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stats-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stats-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.stats-card:hover {
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-glow);
+}
+
+.stats-card-icon {
+    font-size: 22px;
+}
+
+.stats-card-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stats-card-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.stats-chart-section {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stats-chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.stats-chart-wrapper {
+    direction: ltr;
+}
+
+.stats-tooltip {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    direction: rtl;
+}
+
+.stats-tooltip-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.stats-recent-section {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.stats-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stats-recent-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+}
+
+.stats-recent-name {
+    flex: 1;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.stats-recent-score {
+    color: var(--accent-purple);
+    font-weight: 700;
+    min-width: 70px;
+    text-align: center;
+}
+
+.stats-recent-answers {
+    color: var(--text-secondary);
+    font-size: 14px;
+    min-width: 70px;
+    text-align: left;
+}
+
+.recent-correct {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.recent-wrong {
+    color: var(--accent-red);
+    font-weight: 600;
+}
+
+@media (max-width: 500px) {
+    .stats-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-card-value {
+        font-size: 18px;
+    }
+
+    .stats-card-label {
+        font-size: 11px;
+    }
+
+    .stats-recent-row {
+        font-size: 13px;
+    }
+}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import confetti from 'canvas-confetti';
 import Button from './Button';
 import '../styles/ResultsScreen.css';
 
@@ -6,6 +7,34 @@ const MEDALS = ['🥇', '🥈', '🥉'];
 
 function ResultsScreen({ rankings, winnerName, onBack }) {
     const [expandedId, setExpandedId] = useState(null);
+
+    useEffect(() => {
+        if (winnerName) {
+            const duration = 3000;
+            const end = Date.now() + duration;
+
+            const frame = () => {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.7 }
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.7 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            };
+
+            frame();
+        }
+    }, [winnerName]);
 
     if (!rankings || rankings.length === 0) {
         return (
@@ -70,12 +99,6 @@ function ResultsScreen({ rankings, winnerName, onBack }) {
                                         <span className="stat-value">{player.luckEvents || 0}</span>
                                         <span className="stat-label">אירועי מזל 🎲</span>
                                     </div>
-                                    {player.swapsUsed > 0 && (
-                                        <div className="stat-box">
-                                            <span className="stat-value">{player.swapsUsed}</span>
-                                            <span className="stat-label">החלפות שאלה 🔄</span>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         )}

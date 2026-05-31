@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { HOST, getErrorMessage } from "../Constants";
-import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import '../styles/LoginPage.css';
@@ -33,12 +32,7 @@ function LoginPage() {
 
     return (
         <div className="login-page">
-            <motion.div
-                className="login-card"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-            >
+            <div className="login-card card-enter">
                 <span className="login-logo">🏎️</span>
                 <h1 className="login-title">מרוץ הלמידה</h1>
                 <p className="login-subtitle">התחבר כדי להתחיל לשחק!</p>
@@ -71,7 +65,7 @@ function LoginPage() {
                         אין לך חשבון? <Link to="/signup">הירשם עכשיו</Link>
                     </p>
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 }

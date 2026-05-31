@@ -33,15 +33,14 @@ function PlayerSide({ gameData }) {
 
     const [questionMode, setQuestionMode] = useState("normal");
     const [dirtRoadRemaining, setDirtRoadRemaining] = useState(0);
-    const [canSwap, setCanSwap] = useState(false);
 
     const [luckEvent, setLuckEvent] = useState(null);
 
     const eventSourceRef = useRef(null);
     const myIdRef = useRef(null);
     const loadingRef = useRef(false);
-    const timeLeftRef = useRef(null);
     const submittingRef = useRef(false);
+    const handleTimeUpRef = useRef(null);
 
     const trackLength = gameData?.trackLength || 1000;
 
@@ -51,10 +50,6 @@ function PlayerSide({ gameData }) {
     useEffect(() => {
         myIdRef.current = myId;
     }, [myId]);
-
-    useEffect(() => {
-        timeLeftRef.current = timeLeft;
-    }, [timeLeft]);
 
     const setLoadingState = (val) => {
         loadingRef.current = val;
@@ -72,15 +67,18 @@ function PlayerSide({ gameData }) {
         clearCountdown();
         setTimeLeft(seconds);
         setTimeLimit(seconds);
-        timeLeftRef.current = seconds;
 
         timerRef.current = setInterval(() => {
             setTimeLeft(prev => {
                 const next = prev - 1;
-                timeLeftRef.current = next;
                 if (next <= 0) {
                     clearInterval(timerRef.current);
                     timerRef.current = null;
+                    setTimeout(() => {
+                        if (handleTimeUpRef.current) {
+                            handleTimeUpRef.current();
+                        }
+                    }, 0);
                     return 0;
                 }
                 return next;
@@ -100,15 +98,12 @@ function PlayerSide({ gameData }) {
                     if (mode === "junction") {
                         setQuestion(null);
                         setFeedback(null);
-                        setCanSwap(false);
                         clearCountdown();
                         setTimeLeft(null);
-                        timeLeftRef.current = null;
                     } else {
                         setQuestion({ text: res.data.questionText, options: res.data.options });
                         setFeedback(null);
                         setDirtRoadRemaining(res.data.dirtRoadRemaining || 0);
-                        setCanSwap(res.data.canSwap || false);
                         startCountdown(res.data.timeLimitSeconds || 15);
                     }
                 }
@@ -139,29 +134,8 @@ function PlayerSide({ gameData }) {
     }, [id, fetchQuestion]);
 
     useEffect(() => {
-        if (timeLeft === 0 && !submittingRef.current && !loadingRef.current) {
-            handleTimeUp();
-        }
-    }, [timeLeft, handleTimeUp]);
-
-    const handleSwap = () => {
-        if (loading) return;
-        setLoadingState(true);
-        clearCountdown();
-        const token = Cookies.get("token");
-
-        axios.post(`${HOST}swap-question`, { token, gameId: parseInt(id) })
-            .then(res => {
-                if (res.data.success) {
-                    setQuestion({ text: res.data.questionText, options: res.data.options });
-                    setFeedback(null);
-                    setCanSwap(false);
-                    startCountdown(res.data.timeLimitSeconds || 15);
-                }
-            })
-            .catch(err => console.error(err))
-            .finally(() => setLoadingState(false));
-    };
+        handleTimeUpRef.current = handleTimeUp;
+    }, [handleTimeUp]);
 
     const handleJunctionChoice = (choice) => {
         const token = Cookies.get("token");
@@ -268,33 +242,21 @@ function PlayerSide({ gameData }) {
                     }
                     setTimeout(() => fetchQuestion(), questionMode === "autostrada" ? 1500 : 800);
                 } else {
+                    clearCountdown();
+                    submittingRef.current = false;
                     if (questionMode === "autostrada") {
-                        clearCountdown();
-                        submittingRef.current = false;
                         setFeedback('autostrada-fail');
                         setTimeout(() => {
                             setFeedback(null);
                             setLoadingState(false);
                             fetchQuestion();
                         }, 2000);
-                    } else if (questionMode === "dirtroad") {
-                        clearCountdown();
-                        submittingRef.current = false;
+                    } else {
                         setFeedback('wrong');
                         setTimeout(() => {
                             setFeedback(null);
                             setLoadingState(false);
                             fetchQuestion();
-                        }, 1000);
-                    } else {
-                        submittingRef.current = false;
-                        setFeedback('wrong');
-                        setTimeout(() => {
-                            setFeedback(null);
-                            setLoadingState(false);
-                            if (timeLeftRef.current !== null && timeLeftRef.current <= 0) {
-                                handleTimeUp();
-                            }
                         }, 1000);
                     }
                 }
@@ -333,23 +295,22 @@ function PlayerSide({ gameData }) {
                     {questionMode === "junction" ? (
                         <JunctionChoice onChoose={handleJunctionChoice} loading={loading} />
                     ) : (
-                        <QuestionCard
-                            question={question}
-                            feedback={feedback}
-                            loading={loading}
-                            onAnswerClick={handleAnswerClick}
-                            timeLeft={timeLeft}
-                            timeLimit={timeLimit}
-                            questionMode={questionMode}
-                            dirtRoadRemaining={dirtRoadRemaining}
-                            canSwap={canSwap}
-                            onSwap={handleSwap}
-                        />
+                        <>
+                            <QuestionCard
+                                question={question}
+                                feedback={feedback}
+                                loading={loading}
+                                onAnswerClick={handleAnswerClick}
+                                timeLeft={timeLeft}
+                                timeLimit={timeLimit}
+                                questionMode={questionMode}
+                                dirtRoadRemaining={dirtRoadRemaining}
+                            />
+                            <LuckPopup event={luckEvent} onClose={() => setLuckEvent(null)} />
+                        </>
                     )}
                 </div>
             )}
-
-            <LuckPopup event={luckEvent} onClose={() => setLuckEvent(null)} />
         </div>
     );
 }
