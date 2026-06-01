@@ -1,16 +1,14 @@
-/* המכולה שיושבת בפינה השמאלית התחתונה */
 .toast-container {
     position: fixed;
     bottom: 24px;
     left: 24px;
     display: flex;
-    flex-direction: column-reverse; /* חדשים דוחפים את הישנים למעלה */
+    flex-direction: column-reverse;
     gap: 12px;
     z-index: 9999;
-    pointer-events: none; /* כדי שלא יחסמו לחיצות על דברים בטעות */
+    pointer-events: none;
 }
 
-/* הכרטיסייה עצמה - סגנון מדבקה עסיסית */
 .event-toast {
     display: flex;
     align-items: center;

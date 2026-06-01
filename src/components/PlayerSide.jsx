@@ -44,6 +44,7 @@ function PlayerSide({ gameData }) {
     const loadingRef = useRef(false);
     const submittingRef = useRef(false);
     const handleTimeUpRef = useRef(null);
+    const questionModeRef = useRef("normal");
 
     const trackLength = gameData?.trackLength || 1000;
 
@@ -53,6 +54,10 @@ function PlayerSide({ gameData }) {
     useEffect(() => {
         myIdRef.current = myId;
     }, [myId]);
+
+    useEffect(() => {
+        questionModeRef.current = questionMode;
+    }, [questionMode]);
 
     const setLoadingState = (val) => {
         loadingRef.current = val;
@@ -128,7 +133,8 @@ function PlayerSide({ gameData }) {
         if (submittingRef.current || loadingRef.current) return;
         submittingRef.current = true;
         setLoadingState(true);
-        setFeedback('timeout');
+        const isAutostrada = questionModeRef.current === "autostrada";
+        setFeedback(isAutostrada ? 'autostrada-fail' : 'timeout');
         clearCountdown();
         const token = Cookies.get("token");
 
@@ -141,7 +147,7 @@ function PlayerSide({ gameData }) {
                     setFeedback(null);
                     setLoadingState(false);
                     fetchQuestion();
-                }, 1200);
+                }, isAutostrada ? 2000 : 1200);
             });
     }, [id, fetchQuestion]);
 
