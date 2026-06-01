@@ -124,8 +124,8 @@ function UserDashboard() {
                         onChange={(e) => setNewGameType(Number(e.target.value))}
                     >
                         <option value={0}>רמה קלה (חיבור וחיסור)</option>
-                        <option value={1}>רמה בינונית (כפל וחילוק)</option>
-                        <option value={2}>רמה קשה (אחוזים)</option>
+                        <option value={1}>רמה בינונית (חיבור, חיסור, כפל וחילוק)</option>
+                        <option value={2}>רמה קשה (כל הפעולות כולל אחוזים)</option>
                     </select>
                 </div>
 

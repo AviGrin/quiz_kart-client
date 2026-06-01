@@ -33,9 +33,9 @@ function CreatorSide({ gameData }) {
             case "STREAK": return `${data.playerName} להט עם רצף של ${data.streak}!`;
             case "LUCK_EVENT":
             {const luckMsg = {
-                    TURBO: 'קיבל טורבו!', DOUBLE_POINTS: 'קיבל נקודות כפולות!',
-                    FLAT_TIRE: 'חטף תקר בגלגל!', OIL_SLICK: 'החליק על כתם שמן!'
-                };
+                TURBO: 'קיבל טורבו!', DOUBLE_POINTS: 'קיבל נקודות כפולות!',
+                FLAT_TIRE: 'חטף תקר בגלגל!', OIL_SLICK: 'החליק על כתם שמן!'
+            };
                 return `${data.playerName} ${luckMsg[data.event] || 'נתקל בהפתעה!'}`;}
             case "JUNCTION_CHOSEN":
                 return `${data.playerName} ירד ל${data.junctionChoice === 'autostrada' ? 'אוטוסטרדה' : 'דרך עפר'}`;
@@ -60,19 +60,6 @@ function CreatorSide({ gameData }) {
             .then(() => navigate('/dashboard'))
             .catch(() => navigate('/dashboard'));
     };
-
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            if (status === 0) {
-                const token = Cookies.get("token");
-                const payload = JSON.stringify({ token, gameId: parseInt(id) });
-                const blob = new Blob([payload], { type: 'application/json' });
-                navigator.sendBeacon(`${HOST}leave-game`, blob);
-            }
-        };
-        window.addEventListener("beforeunload", handleBeforeUnload);
-        return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-    }, [id, status]);
 
     useEffect(() => {
         const token = Cookies.get("token");
@@ -120,12 +107,26 @@ function CreatorSide({ gameData }) {
                 }
             });
 
-            es.onerror = () => { es.close(); setTimeout(connectSSE, 3000); };
+            es.onerror = () => {
+                es.close();
+                setTimeout(() => {
+                    if (eventSourceRef.current === es) {
+                        eventSourceRef.current = connectSSE();
+                    }
+                }, 3000);
+            };
+
             return es;
         };
 
         eventSourceRef.current = connectSSE();
-        return () => eventSourceRef.current?.close();
+
+        return () => {
+            if (eventSourceRef.current) {
+                eventSourceRef.current.close();
+                eventSourceRef.current = null;
+            }
+        };
     }, [id, navigate]);
 
     const handleStartGame = () => {

@@ -66,20 +66,6 @@ function PlayerSide({ gameData }) {
             .catch(() => navigate('/dashboard'));
     };
 
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            if (status === 0) {
-                const token = Cookies.get("token");
-                const payload = JSON.stringify({ token, gameId: parseInt(id) });
-                const blob = new Blob([payload], { type: 'application/json' });
-                navigator.sendBeacon(`${HOST}leave-game`, blob);
-            }
-        };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
-        return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-    }, [id, status]);
-
     const clearCountdown = () => {
         if (timerRef.current) {
             clearInterval(timerRef.current);
@@ -361,7 +347,6 @@ function PlayerSide({ gameData }) {
                                 />
                             </div>
                             <LuckPopup event={luckEvent} onClose={() => setLuckEvent(null)} />
-                            {/* אפקט פסי הבלימה */}
                             {(feedback === 'correct' || feedback === 'autostrada-success') && (
                                 <SkidMarkEffect />
                             )}

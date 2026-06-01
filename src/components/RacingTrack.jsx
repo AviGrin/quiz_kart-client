@@ -11,26 +11,28 @@ function RacingTrack({ players, trackLength }) {
     useEffect(() => {
         if (!players) return;
 
-        let newTurbos = { ...turboCars };
-        let changed = false;
+        const turbosToClear = [];
 
         players.forEach(p => {
             const oldScore = prevScores.current[p.id] || 0;
             if (p.score - oldScore >= 40) {
-                newTurbos[p.id] = true;
-                changed = true;
-
-                setTimeout(() => {
-                    setTurboCars(current => ({ ...current, [p.id]: false }));
-                }, 2000);
+                turbosToClear.push(p.id);
             }
             prevScores.current[p.id] = p.score;
         });
 
-        if (changed) {
-            setTimeout(() => {
-                setTurboCars(newTurbos);
-            }, 0);
+        if (turbosToClear.length > 0) {
+            setTurboCars(prev => {
+                const next = { ...prev };
+                turbosToClear.forEach(pid => { next[pid] = true; });
+                return next;
+            });
+
+            turbosToClear.forEach(pid => {
+                setTimeout(() => {
+                    setTurboCars(current => ({ ...current, [pid]: false }));
+                }, 2000);
+            });
         }
     }, [players]);
 

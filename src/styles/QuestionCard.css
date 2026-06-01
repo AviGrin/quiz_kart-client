@@ -42,7 +42,7 @@
     text-align: center;
 }
 
-option-btn:nth-child(1) { background: var(--accent-red); box-shadow: 0 8px 0 #b91c1c; }
+.option-btn:nth-child(1) { background: var(--accent-red); box-shadow: 0 8px 0 #b91c1c; }
 .option-btn:nth-child(2) { background: var(--accent-blue); box-shadow: 0 8px 0 #1d4ed8; }
 .option-btn:nth-child(3) { background: var(--accent-yellow); box-shadow: 0 8px 0 #ca8a04; color: #1e293b; }
 .option-btn:nth-child(4) { background: var(--accent-green); box-shadow: 0 8px 0 #15803d; }
